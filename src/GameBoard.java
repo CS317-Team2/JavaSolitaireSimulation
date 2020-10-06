@@ -10,9 +10,17 @@ public class GameBoard {
 		this.foundation = new ArrayList[4];
 		this.tableau = new ArrayList[7];
 		this.deck = new CardDeck();
+		tableau[0] = new ArrayList<Card>();
+		tableau[1] = new ArrayList<Card>();
+		tableau[2] = new ArrayList<Card>();
+		tableau[3] = new ArrayList<Card>();
+		tableau[4] = new ArrayList<Card>();
+		tableau[5] = new ArrayList<Card>();
+		tableau[6] = new ArrayList<Card>();
 	}
 	
 	public void setUp() {
+		
 		this.deck.shuffle();
 		tableau[0].add(this.deck.drawCard());
 		

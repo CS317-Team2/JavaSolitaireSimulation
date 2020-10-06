@@ -9,7 +9,7 @@ public class Driver {
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < tableau[i].size(); j++) {
 				Card card = tableau[i].get(j);
-				System.out.println(card.getRank() + "of " + card.getSuit());
+				System.out.println(card.getRank() + " of " + card.getSuit());
 				
 			}
 			System.out.println("************");
