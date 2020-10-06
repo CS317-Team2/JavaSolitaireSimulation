@@ -2,55 +2,59 @@ import java.util.ArrayList;
 
 public class GameBoard {
 	
-	private ArrayList<Card> spadeFoundation, clubFoundation, heartFoundation, diamondFoundation;
-	private ArrayList<Card> tableau1, tableau2, tableau3, tableau4, tableau5, tableau6, tableau7;
-	private ArrayList<Card> deck;
+	private ArrayList<Card>[] foundation;
+	private ArrayList<Card>[] tableau;
+	private CardDeck deck;
 	
 	public GameBoard() {
-		// TODO Auto-generated constructor stub
+		this.foundation = new ArrayList[4];
+		this.tableau = new ArrayList[7];
+		this.deck = new CardDeck();
 	}
 	
-	public void setUp(CardDeck a) {
-		a.shuffle();
-		tableau1.add(a.drawCard());
+	public void setUp() {
+		this.deck.shuffle();
+		tableau[0].add(this.deck.drawCard());
 		
-		tableau2.add(a.drawCard());
-		tableau2.add(a.drawCard());
+		for (int i = 0; i < 2; i++) {
+			tableau[1].add(this.deck.drawCard());
+		}
 		
-		tableau3.add(a.drawCard());
-		tableau3.add(a.drawCard());
-		tableau3.add(a.drawCard());
+		for (int i = 0; i < 3; i++) {
+			tableau[2].add(this.deck.drawCard());
+		}
 		
-		tableau4.add(a.drawCard());
-		tableau4.add(a.drawCard());
-		tableau4.add(a.drawCard());
-		tableau4.add(a.drawCard());
+		for (int i = 0; i < 4; i++) {
+			tableau[3].add(this.deck.drawCard());
+		}
 		
-		tableau5.add(a.drawCard());
-		tableau5.add(a.drawCard());
-		tableau5.add(a.drawCard());
-		tableau5.add(a.drawCard());
-		tableau5.add(a.drawCard());
+		for (int i = 0; i < 5; i++) {
+			tableau[4].add(this.deck.drawCard());
+		}
 		
-		tableau6.add(a.drawCard());
-		tableau6.add(a.drawCard());
-		tableau6.add(a.drawCard());
-		tableau6.add(a.drawCard());
-		tableau6.add(a.drawCard());
-		tableau6.add(a.drawCard());
+		for (int i = 0; i < 6; i++) {
+			tableau[5].add(this.deck.drawCard());
+		}
 		
-		tableau7.add(a.drawCard());
-		tableau7.add(a.drawCard());
-		tableau7.add(a.drawCard());
-		tableau7.add(a.drawCard());
-		tableau7.add(a.drawCard());
-		tableau7.add(a.drawCard());
-		tableau7.add(a.drawCard());
-		
-		deck = a.getPlayingDeck();
-		
+		for (int i = 0; i < 7; i++) {
+			tableau[6].add(this.deck.drawCard());
+		}
+	}
+
+	public ArrayList<Card>[] getFoundation() {
+		return foundation;
+	}
+
+	public ArrayList<Card>[] getTableau() {
+		return tableau;
+	}
+
+	public CardDeck getDeck() {
+		return deck;
 	}
 	
-	///IMPLEMENT RULES HERE
+	
+	//IMPLEMENT RULES HERE
+	//public String solve() {}
 	
 }

@@ -23,15 +23,14 @@ public class CardDeck {
 	}
 	
 	public Card drawCard() {
-		return this.playingDeck.get(0);
+		return this.playingDeck.remove(0);
 	}
 	
 	public int getCardsLeft() {
 		return this.playingDeck.size();
 	}
 	
-	public void discard() {
-		Card card = this.playingDeck.remove(0);
+	public void discard(Card card) {
 		this.discardDeck.add(card);
 	}
 	
