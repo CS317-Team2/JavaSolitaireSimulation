@@ -2,12 +2,14 @@ import java.util.ArrayList;
 
 public class GameBoard {
 	
-	private ArrayList<Card>[] foundation;
+	private static ArrayList<Card> foundationDiamond;
+	private static ArrayList<Card> foundationSpade;
+	private static ArrayList<Card> foundationHeart;
+	private static ArrayList<Card> foundationClub;
 	private ArrayList<Card>[] tableau;
 	private CardDeck deck;
 	
 	public GameBoard() {
-		this.foundation = new ArrayList[4];
 		this.tableau = new ArrayList[7];
 		this.deck = new CardDeck();
 		tableau[0] = new ArrayList<Card>();
@@ -17,6 +19,11 @@ public class GameBoard {
 		tableau[4] = new ArrayList<Card>();
 		tableau[5] = new ArrayList<Card>();
 		tableau[6] = new ArrayList<Card>();
+		
+		foundationDiamond = new ArrayList<Card>();
+		foundationSpade = new ArrayList<Card>();
+		foundationHeart = new ArrayList<Card>();
+		foundationClub = new ArrayList<Card>();
 	}
 	
 	public void setUp() {
@@ -48,11 +55,7 @@ public class GameBoard {
 			tableau[6].add(this.deck.drawCard());
 		}
 	}
-
-	public ArrayList<Card>[] getFoundation() {
-		return foundation;
-	}
-
+	
 	public ArrayList<Card>[] getTableau() {
 		return tableau;
 	}
@@ -63,6 +66,92 @@ public class GameBoard {
 	
 	
 	//IMPLEMENT RULES HERE
-	//public String solve() {}
+	public void solve() {
+		boolean solved = false;
+		boolean failed = false;
+		while (solved == false && failed == false) {
+			tableauToFoundation();
+			deckToFoundation();
+			if (deck.getCirculation() > 3) {
+				failed = true;
+			}
+			if (this.foundationHeart.size() == 13 &&
+				this.foundationDiamond.size() == 13 &&
+				this.foundationClub.size() == 13 &&
+				this.foundationSpade.size() == 13) {
+				solved = true;
+			}
+		}
+		
+	}
+		
+	public void deckToFoundation() {
+		Card card = deck.drawCard();
+		String suit  = card.getSuit();
+		if (canPutFoundation(card)) {
+			if (suit == "Hearts") {
+				this.foundationHeart.add(card);
+			}
+			if (suit == "Diamonds") {
+				this.foundationDiamond.add(card);
+			}
+			if (suit == "Clubs") {
+				this.foundationClub.add(card);
+			}
+			if (suit == "Spades") {
+				this.foundationSpade.add(card);
+			}
+			
+		}
+	}
 	
+	public void tableauToFoundation() {
+		for (int i = 0; i < 7; i++) {
+				Card card = tableau[i].get(tableau[i].size()- 1);
+				String suit  = card.getSuit();
+				if (canPutFoundation(card)) {
+					if (suit == "Hearts") {
+						this.foundationHeart.add(tableau[i].remove(tableau[i].size()- 1));
+					}
+					if (suit == "Diamonds") {
+						this.foundationDiamond.add(tableau[i].remove(tableau[i].size()- 1));
+					}
+					if (suit == "Clubs") {
+						this.foundationClub.add(tableau[i].remove(tableau[i].size()- 1));
+					}
+					if (suit == "Spades") {
+						this.foundationSpade.add(tableau[i].remove(tableau[i].size()- 1));
+					}
+					
+				}	
+			}
+		}
+		
+	
+	
+	public static boolean canPutFoundation(Card card) {
+		boolean a = false;
+		String suit = card.getSuit();
+		if (suit == "Hearts") {
+			if (card.getRank() == foundationHeart.size() + 1) {
+				a = true;
+			}
+		}
+		if (suit == "Diamonds") {
+			if (card.getRank() == foundationDiamond.size() + 1) {
+				a = true;
+			}
+		}
+		if (suit == "Clubs") {
+			if (card.getRank() == foundationClub.size() + 1) {
+				a = true;
+			}
+		}
+		if (suit == "Spades") {
+			if (card.getRank() == foundationSpade.size() + 1) {
+				a = true;
+			}
+		}
+		return a;
+	}
 }

@@ -6,8 +6,10 @@ public class CardDeck {
 	private ArrayList<Card> playingDeck;
 	private ArrayList<Card> discardDeck;
 	private final String[] SUITS = {"Spades", "Hearts", "Clubs", "Diamonds"};
+	private int circulation;
 	
 	public CardDeck() {
+		this.circulation = 0;
 		this.playingDeck = new ArrayList<Card>();
 		this.discardDeck = new ArrayList<Card>();
 		for (int i = 0; i < SUITS.length; i++) {
@@ -40,6 +42,7 @@ public class CardDeck {
 			Card card = this.discardDeck.remove(0);
 			this.playingDeck.add(card);
 		}
+		circulation+=1;
 	}
 	
 	public ArrayList<Card> getPlayingDeck(){
@@ -48,5 +51,9 @@ public class CardDeck {
 	
 	public ArrayList<Card> getDiscardDeck(){
 		return this.discardDeck;
+	}
+	
+	public int getCirculation() {
+		return this.circulation;
 	}
 }
