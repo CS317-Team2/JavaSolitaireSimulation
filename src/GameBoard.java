@@ -97,7 +97,11 @@ public class GameBoard {
 	public void deckToFoundation() {
 		if (deck.getPlayingDeck().isEmpty()) {
 			deck.reset();
+			if (deck.getPlayingDeck().isEmpty()) {
+				return;
+			}
 		}
+		
 		Card card = deck.drawCard();
 		String suit  = card.getSuit();
 		if (canPutFoundation(card)) {
@@ -119,30 +123,32 @@ public class GameBoard {
 	
 	public boolean tableauToFoundation() {
 		for (int i = 0; i < 7; i++) {
-				Card card = tableau[i].get(tableau[i].size()- 1);
-				String suit  = card.getSuit();
-				if (canPutFoundation(card)) {
-					if (suit == "Hearts") {
-						this.foundationHeart.add(tableau[i].remove(tableau[i].size()- 1));
-						return true;
-					}
-					if (suit == "Diamonds") {
-						this.foundationDiamond.add(tableau[i].remove(tableau[i].size()- 1));
-						return true;
-					}
-					if (suit == "Clubs") {
-						this.foundationClub.add(tableau[i].remove(tableau[i].size()- 1));
-						return true;
-					}
-					if (suit == "Spades") {
-						this.foundationSpade.add(tableau[i].remove(tableau[i].size()- 1));
-						return true;
-					}
-					
-				}
+			if (tableau[i].size() == 0) {
+				i++;
 			}
-		return false;
+			Card card = tableau[i].get(tableau[i].size()- 1);
+			String suit  = card.getSuit();
+			if (canPutFoundation(card)) {
+				if (suit == "Hearts") {
+					this.foundationHeart.add(tableau[i].remove(tableau[i].size()- 1));						return true;
+				}
+				if (suit == "Diamonds") {
+					this.foundationDiamond.add(tableau[i].remove(tableau[i].size()- 1));
+					return true;
+				}
+				if (suit == "Clubs") {
+					this.foundationClub.add(tableau[i].remove(tableau[i].size()- 1));
+					return true;
+				}
+				if (suit == "Spades") {
+					this.foundationSpade.add(tableau[i].remove(tableau[i].size()- 1));
+					return true;
+				}
+					
+			}
 		}
+		return false;
+	}
 		
 	
 	
