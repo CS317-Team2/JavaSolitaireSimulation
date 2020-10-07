@@ -66,33 +66,38 @@ public class GameBoard {
 	
 	
 
-	public void solve() {
+	public String solve() {
 		boolean solved = false;
 		boolean failed = false;
 		boolean move = false;
 		while (solved == false && failed == false) {
-			while (move == false) {
-				tableauToFoundation();
-				if (tableauToFoundation()) {
-					move = true;
-				}
-			}
-
+			tableauToFoundation();
 			deckToFoundation();
 			if (deck.getCirculation() > 3) {
 				failed = true;
+				break;
 			}
 			if (this.foundationHeart.size() == 13 &&
 				this.foundationDiamond.size() == 13 &&
 				this.foundationClub.size() == 13 &&
 				this.foundationSpade.size() == 13) {
 				solved = true;
+				break;
 			}
+		}
+		if (solved == true) {
+			return "solved";
+		}
+		else {
+			return "not solved";
 		}
 		
 	}
 		
 	public void deckToFoundation() {
+		if (deck.getPlayingDeck().isEmpty()) {
+			deck.reset();
+		}
 		Card card = deck.drawCard();
 		String suit  = card.getSuit();
 		if (canPutFoundation(card)) {
