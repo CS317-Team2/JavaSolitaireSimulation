@@ -26,8 +26,11 @@ public class GameBoard {
 		foundationClub = new ArrayList<Card>();
 	}
 	
+	public ArrayList<Card> getFoundationClub() {
+		return foundationClub;
+	}
+	
 	public void setUp() {
-		
 		this.deck.shuffle();
 		tableau[0].add(this.deck.drawCard());
 		
@@ -71,8 +74,13 @@ public class GameBoard {
 		boolean failed = false;
 		boolean move = false;
 		while (solved == false && failed == false) {
-			tableauToFoundation();
+			while (tableauToFoundation());
 			deckToFoundation();
+			//for (int i = 0; i < 7; i ++) {
+				//if (checkOpen() && tableau[i].get(tableau[i].size() - 1).getRank() == 14) {
+			//		.add(tableau[i].remove(tableau[i].size()- 1));
+			//	}
+			//}
 			if (deck.getCirculation() > 3) {
 				failed = true;
 				break;
@@ -84,6 +92,7 @@ public class GameBoard {
 				solved = true;
 				break;
 			}
+			solve();
 		}
 		if (solved == true) {
 			return "solved";
@@ -125,6 +134,9 @@ public class GameBoard {
 		for (int i = 0; i < 7; i++) {
 			if (tableau[i].size() == 0) {
 				i++;
+			} 
+			if (checkOpen()) {
+				return false;
 			}
 			Card card = tableau[i].get(tableau[i].size()- 1);
 			String suit  = card.getSuit();
@@ -176,5 +188,15 @@ public class GameBoard {
 			}
 		}
 		return a;
+	}
+	
+	public boolean checkOpen() {
+		boolean result = false;
+		for (int i = 0; i < 7; i++) {
+			if (tableau[i].size() == 0) {
+				result = true;
+			}
+		}
+		return result;
 	}
 }
