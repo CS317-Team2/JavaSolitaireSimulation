@@ -14,7 +14,7 @@ public class CardDeck {
 		this.discardDeck = new ArrayList<Card>();
 		for (int i = 0; i < SUITS.length; i++) {
 			for (int j = 1; j < 14; j++) {
-				Card card = new Card(j, SUITS[i]);
+				Card card = new Card(j, SUITS[i], 1);
 				this.playingDeck.add(card);
 			}
 		}

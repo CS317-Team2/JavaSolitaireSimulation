@@ -36,26 +36,47 @@ public class GameBoard {
 		
 		for (int i = 0; i < 2; i++) {
 			tableau[1].add(this.deck.drawCard());
+			tableau[1].get(1).hide();
 		}
 		
 		for (int i = 0; i < 3; i++) {
 			tableau[2].add(this.deck.drawCard());
+			tableau[2].get(1).hide();
+			tableau[2].get(2).hide();
 		}
 		
 		for (int i = 0; i < 4; i++) {
 			tableau[3].add(this.deck.drawCard());
+			tableau[3].get(1).hide();
+			tableau[3].get(2).hide();
+			tableau[3].get(3).hide();
 		}
 		
 		for (int i = 0; i < 5; i++) {
 			tableau[4].add(this.deck.drawCard());
+			tableau[4].get(1).hide();
+			tableau[4].get(2).hide();
+			tableau[4].get(3).hide();
+			tableau[4].get(4).hide();
 		}
 		
 		for (int i = 0; i < 6; i++) {
 			tableau[5].add(this.deck.drawCard());
+			tableau[5].get(1).hide();
+			tableau[5].get(2).hide();
+			tableau[5].get(3).hide();
+			tableau[5].get(4).hide();
+			tableau[5].get(5).hide();
 		}
 		
 		for (int i = 0; i < 7; i++) {
 			tableau[6].add(this.deck.drawCard());
+			tableau[6].get(1).hide();
+			tableau[6].get(2).hide();
+			tableau[6].get(3).hide();
+			tableau[6].get(4).hide();
+			tableau[6].get(5).hide();
+			tableau[6].get(6).hide();
 		}
 	}
 	
@@ -102,7 +123,19 @@ public class GameBoard {
 		}
 		
 	}
+	
+	public void tableauToTableau() {
+		int empty = 100;
+		int rank = 100;
 		
+		for (int i = 0; i < 7; i++) {
+			if (tableau[i].size()==0) {
+				//potential king spot
+			}
+			tableau[i].
+		}
+	}
+	
 	public void deckToFoundation() {
 		if (deck.getPlayingDeck().isEmpty()) {
 			deck.reset();
