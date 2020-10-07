@@ -65,12 +65,19 @@ public class GameBoard {
 	}
 	
 	
-	//IMPLEMENT RULES HERE
+
 	public void solve() {
 		boolean solved = false;
 		boolean failed = false;
+		boolean move = false;
 		while (solved == false && failed == false) {
-			tableauToFoundation();
+			while (move == false) {
+				tableauToFoundation();
+				if (tableauToFoundation()) {
+					move = true;
+				}
+			}
+
 			deckToFoundation();
 			if (deck.getCirculation() > 3) {
 				failed = true;
@@ -105,26 +112,31 @@ public class GameBoard {
 		}
 	}
 	
-	public void tableauToFoundation() {
+	public boolean tableauToFoundation() {
 		for (int i = 0; i < 7; i++) {
 				Card card = tableau[i].get(tableau[i].size()- 1);
 				String suit  = card.getSuit();
 				if (canPutFoundation(card)) {
 					if (suit == "Hearts") {
 						this.foundationHeart.add(tableau[i].remove(tableau[i].size()- 1));
+						return true;
 					}
 					if (suit == "Diamonds") {
 						this.foundationDiamond.add(tableau[i].remove(tableau[i].size()- 1));
+						return true;
 					}
 					if (suit == "Clubs") {
 						this.foundationClub.add(tableau[i].remove(tableau[i].size()- 1));
+						return true;
 					}
 					if (suit == "Spades") {
 						this.foundationSpade.add(tableau[i].remove(tableau[i].size()- 1));
+						return true;
 					}
 					
-				}	
+				}
 			}
+		return false;
 		}
 		
 	
