@@ -20,6 +20,7 @@ public class Driver {
 		}
 		System.out.println("total number of wins: " + wins);
 		System.out.println("winning percentage: " + wins/games);
+		s.close();
 		
 		
 		//ArrayList<Card> a = board.getFoundationClub();
