@@ -17,16 +17,18 @@ public class Driver {
 			if (results.equals("solved")) {
 				wins++;
 			}
+			
+			//prints off number of cards in club foundation
+			ArrayList a = board.getFoundationClub();
+			for (int j = 0; j < a.size(); j ++) {
+				Card b = (Card) a.get(j);
+				System.out.println(b.getRank());
+			}
+			System.out.println("*****");
 		}
 		System.out.println("total number of wins: " + wins);
 		System.out.println("winning percentage: " + wins/games);
 		s.close();
-		
-		
-		//ArrayList<Card> a = board.getFoundationClub();
-		//for (int i = 0; i < a.size(); i++) {
-	//		System.out.println(a.get(i).getRank());
-	//	}
 		
 		}
 

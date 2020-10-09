@@ -35,49 +35,49 @@ public class GameBoard {
 		tableau[0].add(this.deck.drawCard());
 		
 		for (int i = 0; i < 2; i++) {
-			tableau[1].add(this.deck.drawCard());
-			tableau[1].get(1).hide();
+			tableau[1].add(this.deck.drawCard());		
 		}
+		tableau[1].get(1).hide();
 		
 		for (int i = 0; i < 3; i++) {
 			tableau[2].add(this.deck.drawCard());
-			tableau[2].get(1).hide();
-			tableau[2].get(2).hide();
 		}
+		tableau[2].get(1).hide();
+		tableau[2].get(2).hide();
 		
 		for (int i = 0; i < 4; i++) {
 			tableau[3].add(this.deck.drawCard());
-			tableau[3].get(1).hide();
-			tableau[3].get(2).hide();
-			tableau[3].get(3).hide();
 		}
+		tableau[3].get(1).hide();
+		tableau[3].get(2).hide();
+		tableau[3].get(3).hide();
 		
 		for (int i = 0; i < 5; i++) {
 			tableau[4].add(this.deck.drawCard());
-			tableau[4].get(1).hide();
-			tableau[4].get(2).hide();
-			tableau[4].get(3).hide();
-			tableau[4].get(4).hide();
 		}
+		tableau[4].get(1).hide();
+		tableau[4].get(2).hide();
+		tableau[4].get(3).hide();
+		tableau[4].get(4).hide();
 		
 		for (int i = 0; i < 6; i++) {
 			tableau[5].add(this.deck.drawCard());
-			tableau[5].get(1).hide();
-			tableau[5].get(2).hide();
-			tableau[5].get(3).hide();
-			tableau[5].get(4).hide();
-			tableau[5].get(5).hide();
 		}
+		tableau[5].get(1).hide();
+		tableau[5].get(2).hide();
+		tableau[5].get(3).hide();
+		tableau[5].get(4).hide();
+		tableau[5].get(5).hide();
 		
 		for (int i = 0; i < 7; i++) {
 			tableau[6].add(this.deck.drawCard());
-			tableau[6].get(1).hide();
-			tableau[6].get(2).hide();
-			tableau[6].get(3).hide();
-			tableau[6].get(4).hide();
-			tableau[6].get(5).hide();
-			tableau[6].get(6).hide();
 		}
+		tableau[6].get(1).hide();
+		tableau[6].get(2).hide();
+		tableau[6].get(3).hide();
+		tableau[6].get(4).hide();
+		tableau[6].get(5).hide();
+		tableau[6].get(6).hide();
 	}
 	
 	public ArrayList<Card>[] getTableau() {
@@ -93,15 +93,27 @@ public class GameBoard {
 	public String solve() {
 		boolean solved = false;
 		boolean failed = false;
-		boolean move = false;
+		//boolean move = false;
 		while (solved == false && failed == false) {
-			while (tableauToFoundation());
 			deckToFoundation();
-			//for (int i = 0; i < 7; i ++) {
-				//if (checkOpen() && tableau[i].get(tableau[i].size() - 1).getRank() == 14) {
-			//		.add(tableau[i].remove(tableau[i].size()- 1));
-			//	}
-			//}
+			while (tableauToFoundation());
+			
+			//Attempted move king to open spot
+			
+			//if (checkOpen()){
+				//ArrayList<Card> kingSpot = new ArrayList<Card>();
+				//for (int i = 0; i < 7; i ++) {
+				//	if (tableau[i].size() == 0) {
+				//		kingSpot = tableau[i];
+				//	}
+				//}
+				//for (int i = 0; i < 7; i ++) {
+				//	if (tableau[i].get(tableau[i].size() - 1).getRank() == 13) {
+				//		kingSpot.add(tableau[i].remove(tableau[i].size()- 1));
+				//	}
+				//}
+		//	}
+			
 			if (deck.getCirculation() > 3) {
 				failed = true;
 				break;
@@ -132,7 +144,7 @@ public class GameBoard {
 			if (tableau[i].size()==0) {
 				//potential king spot
 			}
-			tableau[i].
+			//tableau[i].
 		}
 	}
 	
