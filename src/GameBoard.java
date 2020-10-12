@@ -105,50 +105,28 @@ public class GameBoard {
 	}
 	
 	
-
-	public String solve() {
-		boolean solved = false;
-		boolean failed = false;
-		//boolean move = false;
-		while (solved == false && failed == false) {
-			
-			while (tableauToFoundation());
-			deckToFoundation();
-			//Attempted move king to open spot
-			
-			//if (checkOpen()){
-				//ArrayList<Card> kingSpot = new ArrayList<Card>();
-				//for (int i = 0; i < 7; i ++) {
-				//	if (tableau[i].size() == 0) {
-				//		kingSpot = tableau[i];
-				//	}
-				//}
-				//for (int i = 0; i < 7; i ++) {
-				//	if (tableau[i].get(tableau[i].size() - 1).getRank() == 13) {
-				//		kingSpot.add(tableau[i].remove(tableau[i].size()- 1));
-				//	}
-				//}
-		//	}
-			
-			if (deck.getCirculation() > 3) {
-				failed = true;
-				break;
-			}
-			if (this.foundationHeart.size() == 14 &&
-				this.foundationDiamond.size() == 14 &&
-				this.foundationClub.size() == 14 &&
-				this.foundationSpade.size() == 14) {
-				solved = true;
-				break;
-			}
-			solve();
+	/*
+	 * returns true if solved
+	 */
+	public boolean solve() {
+	
+		if (this.foundationHeart.size() == 14 &&
+			this.foundationDiamond.size() == 14 &&
+			this.foundationClub.size() == 14 &&
+			this.foundationSpade.size() == 14) {
+				return true;
 		}
-		if (solved == true) {
-			return "solved";
+		else if (deck.getCirculation() > 3) {
+			return false;
 		}
 		else {
-			return "not solved";
+			while(tableauToFoundation());
+			while(deckToFoundation());
+			return solve();
 		}
+
+
+		
 		
 	}
 	
@@ -255,10 +233,14 @@ public class GameBoard {
 	
 	public boolean checkOpen() {
 		boolean result = false;
-		for (int i = 0; i < 7; i++) {
-			if (tableau[i].size() == 0) {
+		if (tableau[0].size() == 0 &&
+			tableau[1].size() == 0 &&
+			tableau[2].size() == 0 &&
+			tableau[3].size() == 0 &&
+			tableau[4].size() == 0 &&
+			tableau[5].size() == 0 &&
+			tableau[6].size() == 0) {
 				result = true;
-			}
 		}
 		return result;
 	}

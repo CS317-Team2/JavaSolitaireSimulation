@@ -13,8 +13,8 @@ public class Driver {
 			board.setUp();
 
 		
-			String results = board.solve();
-			if (results.equals("solved")) {
+			Boolean results = board.solve();
+			if (results) {
 				wins++;
 			}
 			
@@ -27,7 +27,7 @@ public class Driver {
 //				System.out.println(c.getRank());
 //			}
 //			System.out.println("*****");
-			
+//			
 //			ArrayList b = board.getFoundationDiamond();
 //			for (int j = 0; j < b.size(); j ++) {
 //				Card c = (Card) b.get(j);
@@ -36,7 +36,7 @@ public class Driver {
 //			System.out.println("*****");
 		}
 		System.out.println("total number of wins: " + wins);
-		System.out.println("winning percentage: " + wins/games);
+		System.out.println("winning percentage: " + wins/games * 100);
 		s.close();
 		
 		}
