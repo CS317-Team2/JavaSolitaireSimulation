@@ -18,13 +18,22 @@ public class Driver {
 				wins++;
 			}
 			
+			//prints off number of cards in first tableau
+			//ArrayList a = board.getTableau0();
 			//prints off number of cards in club foundation
-			ArrayList a = board.getFoundationClub();
-			for (int j = 0; j < a.size(); j ++) {
-				Card b = (Card) a.get(j);
-				System.out.println(b.getRank());
-			}
-			System.out.println("*****");
+//			ArrayList a = board.getFoundationClub();
+//			for (int j = 0; j < a.size(); j ++) {
+//				Card c = (Card) a.get(j);
+//				System.out.println(c.getRank());
+//			}
+//			System.out.println("*****");
+			
+//			ArrayList b = board.getFoundationDiamond();
+//			for (int j = 0; j < b.size(); j ++) {
+//				Card c = (Card) b.get(j);
+//				System.out.println(c.getRank());
+//			}
+//			System.out.println("*****");
 		}
 		System.out.println("total number of wins: " + wins);
 		System.out.println("winning percentage: " + wins/games);
