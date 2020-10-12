@@ -8,6 +8,7 @@ public class GameBoard {
 	private static ArrayList<Card> foundationClub;
 	private ArrayList<Card>[] tableau;
 	private CardDeck deck;
+	private int preventError = 0;
 	
 	public GameBoard() {
 		this.tableau = new ArrayList[7];
@@ -119,7 +120,11 @@ public class GameBoard {
 		else if (deck.getCirculation() > 3) {
 			return false;
 		}
+		else if (preventError > 1000) {
+			return false;
+		}
 		else {
+			preventError++;
 			while(tableauToFoundation());
 			while(deckToFoundation());
 			return solve();
