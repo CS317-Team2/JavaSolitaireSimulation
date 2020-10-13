@@ -25,7 +25,6 @@ public class CardDeck {
 	
 	
 	//deck that wins every time
-	
 	public CardDeck() {
 		this.circulation = 0;
 		this.playingDeck = new ArrayList<Card>();
@@ -68,12 +67,21 @@ public class CardDeck {
 		}
 	}
 	
+	//deck that looses every time
+	//public CardDeck() {
+	//	this.circulation = 0;
+	//}
+	
 	public void shuffle() {
 		Collections.shuffle(this.getPlayingDeck());
 	}
 	
 	public Card drawCard() {
 		return this.playingDeck.remove(0);
+	}
+	
+	public Card discardCard() {
+		return this.discardDeck.get(discardDeck.size()-1);
 	}
 	
 	public int getCardsLeft() {

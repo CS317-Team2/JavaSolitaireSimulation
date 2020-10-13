@@ -18,22 +18,35 @@ public class Driver {
 				wins++;
 			}
 			
-			//prints off number of cards in first tableau
-			//ArrayList a = board.getTableau0();
 			//prints off number of cards in club foundation
-//			ArrayList a = board.getFoundationClub();
-//			for (int j = 0; j < a.size(); j ++) {
-//				Card c = (Card) a.get(j);
-//				System.out.println(c.getRank());
-//			}
-//			System.out.println("*****");
-//			
-//			ArrayList b = board.getFoundationDiamond();
-//			for (int j = 0; j < b.size(); j ++) {
-//				Card c = (Card) b.get(j);
-//				System.out.println(c.getRank());
-//			}
-//			System.out.println("*****");
+			ArrayList a = board.getFoundationClub();
+			for (int j = 0; j < a.size(); j ++) {
+				Card c = (Card) a.get(j);
+				System.out.print(c.getRank() + ", ");
+			}
+			System.out.println("Club Foundation");
+			
+			ArrayList b = board.getFoundationDiamond();
+			for (int j = 0; j < b.size(); j ++) {
+				Card c = (Card) b.get(j);
+				System.out.print(c.getRank()+ ", ");
+			}
+			System.out.println("Diamond Foundation");
+			
+			ArrayList d = board.getFoundationHeart();
+			for (int j = 0; j < d.size(); j ++) {
+				Card c = (Card) d.get(j);
+				System.out.print(c.getRank()+ ", ");
+			}
+			System.out.println("Heart Foundation");
+			
+			ArrayList e = board.getFoundationSpade();
+			for (int j = 0; j < e.size(); j ++) {
+				Card c = (Card) e.get(j);
+				System.out.print(c.getRank()+ ", ");
+			}
+			System.out.println("Spade Foundation");
+			System.out.println("******");
 		}
 		System.out.println("total number of wins: " + wins);
 		System.out.println("winning percentage: " + wins/games * 100);
