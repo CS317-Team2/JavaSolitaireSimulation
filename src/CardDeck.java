@@ -104,7 +104,6 @@ public class CardDeck {
 			this.playingDeck.add(card);
 		}
 		circulation+=1;
-		System.out.println("cir" + circulation);
 	}
 	
 	public ArrayList<Card> getPlayingDeck(){

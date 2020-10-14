@@ -122,9 +122,6 @@ public class GameBoard {
 			System.out.println("Moves: " + moves);
 			return false;
 		}
-		else if (moves > 1000) {
-			return false;
-		}
 		if (tableau == stopT && stopper > 100) {
 			System.out.println("Had to use stopper");
 			return false;
@@ -145,8 +142,10 @@ public class GameBoard {
 		for (int i = 0; i < 7; i++) {
 			System.out.print("|T" + i +"|");
 			ArrayList a = tableau[i];
-			Card b = (Card) a.get(tableau[i].size()-1);
-			System.out.print(" " + b.getRank() + b.getSuit() + " C"+ tableau[i].size() + " ");
+			if ((tableau[i].size() >= 1)) {
+				Card b = (Card) a.get(tableau[i].size()-1);
+				System.out.print(" " + b.getRank() + b.getSuit() + " C"+ tableau[i].size() + " ");
+			}
 		}
 		System.out.println();
 	}
@@ -382,7 +381,7 @@ public class GameBoard {
 	}
 	
 	public void removeCards(ArrayList<Card> moved, int column) {
-		for(int i = 0; i < moved.size() - 1; i--) {
+		for(int i = 0; i > moved.size() - 1; i++) {
 			tableau[column].remove(tableau[column].get(tableau[column].indexOf(moved.get(i))));
 			moves++;
 		}
