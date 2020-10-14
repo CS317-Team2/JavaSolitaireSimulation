@@ -122,16 +122,16 @@ public class GameBoard {
 			System.out.println("Moves: " + moves);
 			return false;
 		}
-		if (tableau == stopT && stopper > 100) {
-			System.out.println("Had to use stopper");
-			return false;
-		}
+//		if (tableau == stopT && stopper > 100) {
+//			System.out.println("Had to use stopper");
+//			return false;
+//		}
 		else {
 			while(tableauToFoundation());
 			while(deckToFoundation());
 			tableauToTableau();
 			System.out.println("Moves: " + moves);
-			gameWatch();
+			//gameWatch();
 			stopper++;
 			return solve();
 		}	
@@ -187,19 +187,21 @@ public class GameBoard {
 			if(!toMove.isEmpty()) {
 				Card cardToCheck = toMove.get(toMove.size()-1);
 				for(int j = 0; j < 7; j++) {
-					Card card = tableau[j].get(tableau[j].size() - 1);
-					if(cardToCheck.getRank() == card.getRank() + 1 && !cardToCheck.getColor().equals(card.getColor())) {
-						int column = i;
-						moved = true;
-						while(temp > 0) {
-							Card toAdd = toMove.get(temp);
-							tableau[j].add(toAdd);
-							temp--;
-						}
-						if(moved) {
-							removeCards(toMove, column);
-							moves++;
-							break;
+					if (tableau[j].size() > 0) {
+						Card card = tableau[j].get(tableau[j].size() - 1);
+						if(cardToCheck.getRank() == card.getRank() + 1 && !cardToCheck.getColor().equals(card.getColor())) {
+							int column = i;
+							moved = true;
+							while(temp > 0) {
+								Card toAdd = toMove.get(temp);
+								tableau[j].add(toAdd);
+								temp--;
+							}
+							if(moved) {
+								removeCards(toMove, column);
+								moves++;
+								break;
+							}
 						}
 					}
 				}
@@ -213,30 +215,30 @@ public class GameBoard {
 			return false;	
 		}
 		if (!deck.getDiscardDeck().isEmpty()) {
-		Card discard = deck.discardCard();
-		String suitD = discard.getSuit();
-		if (canPutFoundation(discard)) {
-			if (suitD == "Hearts") {
-				this.foundationHeart.add(discard);
-				moves++;
-				return deckToFoundation();
+			Card discard = deck.discardCard();
+			String suitD = discard.getSuit();
+			if (canPutFoundation(discard)) {
+				if (suitD == "Hearts") {
+					this.foundationHeart.add(discard);
+					moves++;
+					return deckToFoundation();
+				}
+				if (suitD == "Diamonds") {
+					this.foundationDiamond.add(discard);
+					moves++;
+					return deckToFoundation();
+				}
+				if (suitD == "Clubs") {
+					this.foundationClub.add(discard);
+					moves++;
+					return deckToFoundation();
+				}
+				if (suitD == "Spades") {
+					this.foundationSpade.add(discard);
+					moves++;
+					return deckToFoundation();
+				}
 			}
-			if (suitD == "Diamonds") {
-				this.foundationDiamond.add(discard);
-				moves++;
-				return deckToFoundation();
-			}
-			if (suitD == "Clubs") {
-				this.foundationClub.add(discard);
-				moves++;
-				return deckToFoundation();
-			}
-			if (suitD == "Spades") {
-				this.foundationSpade.add(discard);
-				moves++;
-				return deckToFoundation();
-			}
-		}
 		}
 		if (deck.getPlayingDeck().isEmpty()) {
 			deck.reset();
