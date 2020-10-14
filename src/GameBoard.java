@@ -129,15 +129,6 @@ public class GameBoard {
 			System.out.println("Had to use stopper");
 			return false;
 		}
-//		else if (tableauToFoundation() == false && deckToFoundation() == false) {
-//			tableauToFoundation();
-//			deckToFoundation();
-//			if (tableauToFoundation() == false && deckToFoundation() == false) {
-//				System.out.println("Moves: " + moves);
-//				return false;
-//			}
-//			return solve();
-//		}
 		else {
 			while(tableauToFoundation());
 			while(deckToFoundation());
@@ -160,10 +151,21 @@ public class GameBoard {
 		System.out.println();
 	}
 	
+	public void deckToTableau() {
+		ArrayList<Card> discard = deck.getDiscardDeck();
+		if (!discard.isEmpty()) {
+			Card DCard = discard.get(discard.size()-1);
+			for (int i = 0; i < 7; i++) {
+				Card TCard = tableau[i].get(tableau[i].size() - 1);
+				if (TCard.getRank() == DCard.getRank()+1 && TCard.getColor() != DCard.getColor()) {
+					tableau[i].add(DCard);
+					
+				}
+			}
+		}
+	}
+	
 	public void tableauToTableau() {
-		int empty = 100;
-		int rank = 100;
-
 		//Checks for open tableau space, and then looks for/places a king
 
 		for (int i = 0; i < 7; i++) {
@@ -180,11 +182,11 @@ public class GameBoard {
 		}
 
 		for(int i = 0; i < 7; i++) {
-			ArrayList<Card> toMove = checkCardsAbove();
+			ArrayList<Card> toMove = checkCardsAbove(i);
 			boolean moved = false;
 			int temp = toMove.size() - 1;
 			if(!toMove.isEmpty()) {
-				Card cardToCheck = toMove.get(toMove.size());
+				Card cardToCheck = toMove.get(toMove.size()-1);
 				for(int j = 0; j < 7; j++) {
 					Card card = tableau[j].get(tableau[j].size() - 1);
 					if(cardToCheck.getRank() == card.getRank() + 1 && !cardToCheck.getColor().equals(card.getColor())) {
@@ -267,6 +269,9 @@ public class GameBoard {
 			}
 			
 		}
+		else {
+			deck.addToDiscardPile(card);
+		}
 		return false;
 	}
 	
@@ -307,6 +312,9 @@ public class GameBoard {
 					}
 					
 				}
+			}
+			else {
+				tableauToTableau();
 			}
 		}
 		return false;
@@ -354,14 +362,14 @@ public class GameBoard {
 		return result;
 	}
 	
-	public ArrayList<Card> checkCardsAbove() {
+	public ArrayList<Card> checkCardsAbove(int i) {
 		ArrayList<Card> holdArray = new ArrayList<Card>();
-			for(int j = 0; j < 0; j++) {
-				Card card = tableau[j].get(tableau[j].size() - 1);
+			for(int j = 0; j < tableau[i].size(); j++) {
+				Card card = tableau[i].get(tableau[i].size() - 1);
 				int temp = j;
 				while(temp > 0) {
 					if(card.getHidden() == 1) {
-						Card cardAbove = tableau[j].get(temp);
+						Card cardAbove = tableau[i].get(temp);
 						if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
 							holdArray.add(cardAbove);
 						}

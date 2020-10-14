@@ -84,6 +84,11 @@ public class CardDeck {
 		return this.discardDeck.get(discardDeck.size()-1);
 	}
 	
+	public void addToDiscardPile(Card a) {
+		this.discardDeck.add(a);
+		this.playingDeck.remove(a);
+	}
+	
 	public int getCardsLeft() {
 		return this.playingDeck.size();
 	}
