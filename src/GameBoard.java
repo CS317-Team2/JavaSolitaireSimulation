@@ -6,9 +6,9 @@ public class GameBoard {
 	private static ArrayList<Card> foundationSpade;
 	private static ArrayList<Card> foundationHeart;
 	private static ArrayList<Card> foundationClub;
-	private ArrayList<Card>[] tableau;
+	private ArrayList<Card>[] tableau, stopT;
 	private CardDeck deck;
-	private int moves;
+	private int moves, stopper;
 	
 	public GameBoard() {
 		this.tableau = new ArrayList[7];
@@ -44,7 +44,8 @@ public class GameBoard {
 	}
 	
 	public void setUp() {
-		//this.deck.shuffle();
+		this.deck.shuffle();
+		moves = 0;
 		tableau[0].add(this.deck.drawCard());
 		
 		for (int i = 0; i < 2; i++) {
@@ -91,6 +92,8 @@ public class GameBoard {
 		tableau[6].get(3).hide();
 		tableau[6].get(4).hide();
 		tableau[6].get(5).hide();
+		
+		stopT = tableau;
 	}
 	
 	public ArrayList<Card>[] getTableau() {
@@ -107,7 +110,7 @@ public class GameBoard {
 	 * returns true if solved
 	 */
 	public boolean solve() {
-	
+
 		if (this.foundationHeart.size() == 14 &&
 			this.foundationDiamond.size() == 14 &&
 			this.foundationClub.size() == 14 &&
@@ -122,10 +125,15 @@ public class GameBoard {
 		else if (moves > 1000) {
 			return false;
 		}
-//		else if (deckToFoundation() == false && deckToFoundation() == false) {
+		if (tableau == stopT && stopper > 100) {
+			System.out.println("Had to use stopper");
+			return false;
+		}
+//		else if (tableauToFoundation() == false && deckToFoundation() == false) {
 //			tableauToFoundation();
 //			deckToFoundation();
-//			if (deckToFoundation() == false && deckToFoundation() == false) {
+//			if (tableauToFoundation() == false && deckToFoundation() == false) {
+//				System.out.println("Moves: " + moves);
 //				return false;
 //			}
 //			return solve();
@@ -134,11 +142,23 @@ public class GameBoard {
 			while(tableauToFoundation());
 			while(deckToFoundation());
 			tableauToTableau();
+			System.out.println("Moves: " + moves);
+			gameWatch();
+			stopper++;
 			return solve();
 		}	
-		
+
 	}
 	
+	public void gameWatch() {
+		for (int i = 0; i < 7; i++) {
+			System.out.print("|T" + i +"|");
+			ArrayList a = tableau[i];
+			Card b = (Card) a.get(tableau[i].size()-1);
+			System.out.print(" " + b.getRank() + b.getSuit() + " C"+ tableau[i].size() + " ");
+		}
+		System.out.println();
+	}
 	
 	public void tableauToTableau() {
 		int empty = 100;
@@ -198,22 +218,22 @@ public class GameBoard {
 			if (suitD == "Hearts") {
 				this.foundationHeart.add(discard);
 				moves++;
-				return true;
+				return deckToFoundation();
 			}
 			if (suitD == "Diamonds") {
 				this.foundationDiamond.add(discard);
 				moves++;
-				return true;
+				return deckToFoundation();
 			}
 			if (suitD == "Clubs") {
 				this.foundationClub.add(discard);
 				moves++;
-				return true;
+				return deckToFoundation();
 			}
 			if (suitD == "Spades") {
 				this.foundationSpade.add(discard);
 				moves++;
-				return true;
+				return deckToFoundation();
 			}
 		}
 		}
@@ -222,6 +242,7 @@ public class GameBoard {
 		}
 		
 		Card card = deck.drawCard();
+		moves++;
 		String suit  = card.getSuit();
 		if (canPutFoundation(card)) {
 			if (suit == "Hearts") {
@@ -355,6 +376,7 @@ public class GameBoard {
 	public void removeCards(ArrayList<Card> moved, int column) {
 		for(int i = 0; i < moved.size() - 1; i--) {
 			tableau[column].remove(tableau[column].get(tableau[column].indexOf(moved.get(i))));
+			moves++;
 		}
 		if(!tableau[column].isEmpty()) {
 			tableau[column].get(tableau[column].size() - 1).makeVisible();
