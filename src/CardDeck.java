@@ -96,6 +96,10 @@ public class CardDeck {
 		Collections.shuffle(this.getPlayingDeck());
 	}
 	
+	public void removeFromDiscard(Card a) {
+		this.discardDeck.remove(a);
+	}
+	
 	/**
 	 * 
 	 * Draws a card from the card deck.
@@ -149,7 +153,7 @@ public class CardDeck {
 	
 	/**
 	 * 
-	 * Resets the whole game
+	 * Resets the card deck
 	 * 
 	 */
 	public void reset() {

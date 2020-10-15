@@ -228,7 +228,8 @@ public class GameBoard {
 					Card TCard = tableau[i].get(tableau[i].size() - 1);
 					if (TCard.getRank() == DCard.getRank()+1 && TCard.getColor() != DCard.getColor()) {
 						tableau[i].add(DCard);
-					
+						deck.removeFromDiscard(DCard);
+						return;
 					}
 				}
 			}
