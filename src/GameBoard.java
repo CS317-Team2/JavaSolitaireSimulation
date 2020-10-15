@@ -8,7 +8,7 @@ public class GameBoard {
 	private static ArrayList<Card> foundationClub;
 	private ArrayList<Card>[] tableau, stopT;
 	private CardDeck deck;
-	private int moves, stopper;
+	private int moves;
 	
 	public GameBoard() {
 		this.tableau = new ArrayList[7];
@@ -122,17 +122,13 @@ public class GameBoard {
 			System.out.println("Moves: " + moves);
 			return false;
 		}
-//		if (tableau == stopT && stopper > 100) {
-//			System.out.println("Had to use stopper");
-//			return false;
-//		}
 		else {
 			while(tableauToFoundation());
-			while(deckToFoundation());
-			tableauToTableau();
+			//tableauToTableau();
+			deckToFoundation();
+			deckToTableau();
 			System.out.println("Moves: " + moves);
-			//gameWatch();
-			stopper++;
+			gameWatch();
 			return solve();
 		}	
 
@@ -155,10 +151,12 @@ public class GameBoard {
 		if (!discard.isEmpty()) {
 			Card DCard = discard.get(discard.size()-1);
 			for (int i = 0; i < 7; i++) {
-				Card TCard = tableau[i].get(tableau[i].size() - 1);
-				if (TCard.getRank() == DCard.getRank()+1 && TCard.getColor() != DCard.getColor()) {
-					tableau[i].add(DCard);
+				if (tableau[i].size() > 0) {
+					Card TCard = tableau[i].get(tableau[i].size() - 1);
+					if (TCard.getRank() == DCard.getRank()+1 && TCard.getColor() != DCard.getColor()) {
+						tableau[i].add(DCard);
 					
+					}
 				}
 			}
 		}
@@ -273,6 +271,7 @@ public class GameBoard {
 		else {
 			deck.addToDiscardPile(card);
 		}
+		deckToTableau();
 		return false;
 	}
 	
