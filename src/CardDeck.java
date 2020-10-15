@@ -1,6 +1,16 @@
+// Import Array List
 import java.util.ArrayList;
+
+// Import Collections
 import java.util.Collections;
 
+/**
+ * 
+ * The Card Deck for solitaire
+ * 
+ * @author pengs
+ *
+ */
 public class CardDeck {
 
 	private ArrayList<Card> playingDeck;
@@ -24,7 +34,12 @@ public class CardDeck {
 	 
 	
 	
-	//deck that wins every time
+	
+	/**
+	 * 
+	 * Card deck method. The deck that wins every time
+	 * 
+	 */
 	public CardDeck() {
 		this.circulation = 0;
 		this.playingDeck = new ArrayList<Card>();
@@ -72,31 +87,71 @@ public class CardDeck {
 	//	this.circulation = 0;
 	//}
 	
+	/**
+	 * 
+	 * Shuffles the deck
+	 * 
+	 */
 	public void shuffle() {
 		Collections.shuffle(this.getPlayingDeck());
 	}
 	
+	/**
+	 * 
+	 * Draws a card from the card deck.
+	 * 
+	 * @return a card from the deck which is called from the array list playingDeck
+	 */
 	public Card drawCard() {
 		return this.playingDeck.remove(0);
 	}
 	
+	/**
+	 * 
+	 * Discards the card that has been played
+	 * 
+	 * @return the discarded card
+	 */
 	public Card discardCard() {
 		return this.discardDeck.get(discardDeck.size()-1);
 	}
 	
+	/**
+	 * 
+	 * Adds a card to the discarded pile
+	 * 
+	 * @param a the card that is being discarded
+	 */
 	public void addToDiscardPile(Card a) {
 		this.discardDeck.add(a);
 		this.playingDeck.remove(a);
 	}
 	
+	/**
+	 * 
+	 * Get how many cards are lefted in the deck
+	 * 
+	 * @return how many cards are left in the deck
+	 */
 	public int getCardsLeft() {
 		return this.playingDeck.size();
 	}
 	
+	/**
+	 * 
+	 * Discards a card
+	 * 
+	 * @param card the card that is being discarded
+	 */
 	public void discard(Card card) {
 		this.discardDeck.add(card);
 	}
 	
+	/**
+	 * 
+	 * Resets the whole game
+	 * 
+	 */
 	public void reset() {
 		int size = this.discardDeck.size();
 		for (int i = 0; i < size; i++) {
@@ -106,14 +161,32 @@ public class CardDeck {
 		circulation+=1;
 	}
 	
+	/**
+	 * 
+	 * Gets the playing deck
+	 * 
+	 * @return the playing deck
+	 */
 	public ArrayList<Card> getPlayingDeck(){
 		return this.playingDeck;
 	}
 	
+	/**
+	 * 
+	 * Gets the discarded pile
+	 * 
+	 * @return the discarded pile
+	 */
 	public ArrayList<Card> getDiscardDeck(){
 		return this.discardDeck;
 	}
 	
+	/**
+	 * 
+	 * Gets the circulation
+	 * 
+	 * @return the circulation
+	 */
 	public int getCirculation() {
 		return this.circulation;
 	}

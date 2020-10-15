@@ -1,5 +1,13 @@
+// Import Array List
 import java.util.ArrayList;
 
+/**
+ * 
+ * The initiation of the game board for solitaire
+ * 
+ * @author pengs
+ *
+ */
 public class GameBoard {
 	
 	private static ArrayList<Card> foundationDiamond;
@@ -10,9 +18,18 @@ public class GameBoard {
 	private CardDeck deck;
 	private int moves;
 	
+	/**
+	 * 
+	 * Initalizing the game board setup
+	 * 
+	 */
 	public GameBoard() {
+		// Creates the tableau
 		this.tableau = new ArrayList[7];
+		
+		// Creates a new Card Deck
 		this.deck = new CardDeck();
+		
 		tableau[0] = new ArrayList<Card>();
 		tableau[1] = new ArrayList<Card>();
 		tableau[2] = new ArrayList<Card>();
@@ -27,38 +44,70 @@ public class GameBoard {
 		foundationClub = new ArrayList<Card>();
 	}
 	
+	/**
+	 * 
+	 * Gets the Club foundation
+	 * 
+	 * @return the array list for the club foundation
+	 */
 	public ArrayList<Card> getFoundationClub() {
 		return foundationClub;
 	}
 	
+	/**
+	 * 
+	 * Gets the Heart foundation
+	 * 
+	 * @return the array list for the heart foundation
+	 */
 	public ArrayList<Card> getFoundationHeart() {
 		return foundationHeart;
 	}
 	
+	/**
+	 * 
+	 * Gets the Diamond foundation
+	 * 
+	 * @return the array list for the diamond foundation
+	 */
 	public ArrayList<Card> getFoundationDiamond() {
 		return foundationDiamond;
 	}
 	
+	/**
+	 * 
+	 * Gets the Spade foundation
+	 * 
+	 * @return the array list for the spade foundation
+	 */
 	public ArrayList<Card> getFoundationSpade() {
 		return foundationSpade;
 	}
 	
+	/**
+	 * Set up the game board
+	 */
 	public void setUp() {
 		this.deck.shuffle();
 		moves = 0;
+		
+		// First tableau gets 1 card
 		tableau[0].add(this.deck.drawCard());
 		
+		// Second tableau gets 2 cards but 1 card is hidden
 		for (int i = 0; i < 2; i++) {
 			tableau[1].add(this.deck.drawCard());		
 		}
 		tableau[1].get(0).hide();
 		
+		// Third tableau gets 3 cards but 2 cards are hidden
 		for (int i = 0; i < 3; i++) {
 			tableau[2].add(this.deck.drawCard());
 		}
 		tableau[2].get(0).hide();
 		tableau[2].get(1).hide();
 		
+		// Fourth tableau gets 4 cards but 3 cards are hidden
 		for (int i = 0; i < 4; i++) {
 			tableau[3].add(this.deck.drawCard());
 		}
@@ -66,6 +115,7 @@ public class GameBoard {
 		tableau[3].get(1).hide();
 		tableau[3].get(2).hide();
 		
+		// Fifth tableau gets 5 cards but 4 cards are hidden
 		for (int i = 0; i < 5; i++) {
 			tableau[4].add(this.deck.drawCard());
 		}
@@ -74,6 +124,7 @@ public class GameBoard {
 		tableau[4].get(2).hide();
 		tableau[4].get(3).hide();
 		
+		// Sixth tableau gets 6 cards but 5 cards are hidden
 		for (int i = 0; i < 6; i++) {
 			tableau[5].add(this.deck.drawCard());
 		}
@@ -83,6 +134,7 @@ public class GameBoard {
 		tableau[5].get(3).hide();
 		tableau[5].get(4).hide();
 		
+		// Seventh tableau gets 7 cards but 6 cards are hidden
 		for (int i = 0; i < 7; i++) {
 			tableau[6].add(this.deck.drawCard());
 		}
@@ -96,18 +148,31 @@ public class GameBoard {
 		stopT = tableau;
 	}
 	
+	/**
+	 * 
+	 * Get the tableau
+	 * 
+	 * @return the tableau
+	 */
 	public ArrayList<Card>[] getTableau() {
 		return tableau;
 	}
 
-	
+	/**
+	 * 
+	 * Get the deck
+	 * 
+	 * @return the deck
+	 */
 	public CardDeck getDeck() {
 		return deck;
 	}
 	
-	
-	/*
-	 * returns true if solved
+	/**
+	 * 
+	 * Solves the game
+	 * 
+	 * @return true if solved
 	 */
 	public boolean solve() {
 
@@ -134,6 +199,11 @@ public class GameBoard {
 
 	}
 	
+	/**
+	 * 
+	 * Watches if any tableau are open
+	 * 
+	 */
 	public void gameWatch() {
 		for (int i = 0; i < 7; i++) {
 			System.out.print("|T" + i +"|");
@@ -146,6 +216,9 @@ public class GameBoard {
 		System.out.println();
 	}
 	
+	/**
+	 * Moves a card from the deck to the tableau
+	 */
 	public void deckToTableau() {
 		ArrayList<Card> discard = deck.getDiscardDeck();
 		if (!discard.isEmpty()) {
@@ -162,9 +235,13 @@ public class GameBoard {
 		}
 	}
 	
+	/**
+	 * Moves a card from one of the tableaus to one of the other 
+	 * tableaus.
+	 */
 	public void tableauToTableau() {
+		
 		//Checks for open tableau space, and then looks for/places a king
-
 		for (int i = 0; i < 7; i++) {
 			if (tableau[i].size() == 0) {
 				for(int j = 0; j < 7; j++) {
@@ -207,7 +284,12 @@ public class GameBoard {
 		}
 	}
 
-	
+	/**
+	 * 
+	 * Placing a rank from the deck to the foundation
+	 * 
+	 * @return true if the rank matches to the foundation requirements
+	 */
 	public boolean deckToFoundation() {
 		if (deck.getPlayingDeck().isEmpty() && deck.getDiscardDeck().isEmpty()) {
 			return false;	
@@ -275,6 +357,12 @@ public class GameBoard {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * Placing a rank from the tableau to the foundation
+	 * 
+	 * @return true if the rank matches to the foundation requirements
+	 */
 	public boolean tableauToFoundation() {
 		
 		for (int i = 0; i < 7; i++) {
@@ -321,7 +409,13 @@ public class GameBoard {
 	}
 		
 	
-	
+	/**
+	 * 
+	 * Ckecing if the card can be placed in the foundation
+	 * 
+	 * @param card the card had it's rank and color
+	 * @return true if it can be placed on the foundation
+	 */
 	public static boolean canPutFoundation(Card card) {
 		boolean a = false;
 		String suit = card.getSuit();
@@ -348,6 +442,12 @@ public class GameBoard {
 		return a;
 	}
 	
+	/**
+	 * 
+	 * Checking if there is any open spot
+	 * 
+	 * @return true if there is an open spot
+	 */
 	public boolean checkOpen() {
 		boolean result = false;
 		if (tableau[0].size() == 0 &&
@@ -362,6 +462,13 @@ public class GameBoard {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * Check the card above
+	 * 
+	 * @param i the number for which card to check
+	 * @return the card that is being checked
+	 */
 	public ArrayList<Card> checkCardsAbove(int i) {
 		ArrayList<Card> holdArray = new ArrayList<Card>();
 			for(int j = 0; j < tableau[i].size(); j++) {
@@ -381,6 +488,13 @@ public class GameBoard {
 		return holdArray;
 	}
 	
+	/**
+	 * 
+	 * Remove the cards
+	 * 
+	 * @param moved the ones that have been moved
+	 * @param column the ones that are in the tableau
+	 */
 	public void removeCards(ArrayList<Card> moved, int column) {
 		for(int i = 0; i > moved.size() - 1; i++) {
 			tableau[column].remove(tableau[column].get(tableau[column].indexOf(moved.get(i))));
