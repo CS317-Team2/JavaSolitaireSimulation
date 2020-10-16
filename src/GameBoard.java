@@ -236,7 +236,12 @@ public class GameBoard {
 			}
 		}
 	}
+	
 	//tableautotableau but only moving one card at a time
+	/**
+	 * Moves a card from one of the tableaus to one of the other 
+	 * tableaus.
+	 */
 	public void tableauToTableau() {
 		//Checks for open tableau space, and then looks for/places a king
 		for (int i = 0; i < 7; i++) {
@@ -251,6 +256,7 @@ public class GameBoard {
 				}
 			}
 		}
+		
 		ArrayList bottomCards = new ArrayList();
 		
 		for (int i =0; i < 7; i++) {
@@ -258,6 +264,7 @@ public class GameBoard {
 		}
 		ArrayList duplicate = bottomCards;
 		
+		//TODO Maybe a while loop can remedy the problem by allowing the card to move in tableau simultaneously 
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
 				if (i <= j) {
@@ -275,10 +282,7 @@ public class GameBoard {
 	}
 	
 	
-	/**
-	 * Moves a card from one of the tableaus to one of the other 
-	 * tableaus.
-	 */
+
 //	public void tableauToTableau() {
 //		
 //		//Checks for open tableau space, and then looks for/places a king
