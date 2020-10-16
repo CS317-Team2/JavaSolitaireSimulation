@@ -189,7 +189,7 @@ public class GameBoard {
 		}
 		else {
 			while(tableauToFoundation());
-			//tableauToTableau();
+			tableauToTableau();
 			deckToFoundation();
 			deckToTableau();
 			System.out.println("Moves: " + moves);
@@ -229,19 +229,15 @@ public class GameBoard {
 					if (TCard.getRank() == DCard.getRank()+1 && TCard.getColor() != DCard.getColor()) {
 						tableau[i].add(DCard);
 						deck.removeFromDiscard(DCard);
+						moves++;
 						return;
 					}
 				}
 			}
 		}
 	}
-	
-	/**
-	 * Moves a card from one of the tableaus to one of the other 
-	 * tableaus.
-	 */
+	//tableautotableau but only moving one card at a time
 	public void tableauToTableau() {
-		
 		//Checks for open tableau space, and then looks for/places a king
 		for (int i = 0; i < 7; i++) {
 			if (tableau[i].size() == 0) {
@@ -255,35 +251,78 @@ public class GameBoard {
 				}
 			}
 		}
-
-		for(int i = 0; i < 7; i++) {
-			ArrayList<Card> toMove = checkCardsAbove(i);
-			boolean moved = false;
-			int temp = toMove.size() - 1;
-			if(!toMove.isEmpty()) {
-				Card cardToCheck = toMove.get(toMove.size()-1);
-				for(int j = 0; j < 7; j++) {
-					if (tableau[j].size() > 0) {
-						Card card = tableau[j].get(tableau[j].size() - 1);
-						if(cardToCheck.getRank() == card.getRank() + 1 && !cardToCheck.getColor().equals(card.getColor())) {
-							int column = i;
-							moved = true;
-							while(temp > 0) {
-								Card toAdd = toMove.get(temp);
-								tableau[j].add(toAdd);
-								temp--;
-							}
-							if(moved) {
-								removeCards(toMove, column);
-								moves++;
-								break;
-							}
-						}
+		ArrayList bottomCards = new ArrayList();
+		
+		for (int i =0; i < 7; i++) {
+			 bottomCards.add(tableau[i].get(tableau[i].size() - 1));
+		}
+		ArrayList duplicate = bottomCards;
+		
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				if (i <= j) {
+					Card first = (Card) bottomCards.get(i);
+					Card second = (Card) duplicate.get(j);
+					if (!(first.getColor().equals(second.getColor())) && first.getRank() == second.getRank()+1) {
+						System.out.println(duplicate.get(i));
+						tableau[i].add(tableau[j].remove(tableau[j].size()-1));
+						moves++;
+						break;
 					}
-				}
+				} 
 			}
 		}
 	}
+	
+	
+	/**
+	 * Moves a card from one of the tableaus to one of the other 
+	 * tableaus.
+	 */
+//	public void tableauToTableau() {
+//		
+//		//Checks for open tableau space, and then looks for/places a king
+//		for (int i = 0; i < 7; i++) {
+//			if (tableau[i].size() == 0) {
+//				for(int j = 0; j < 7; j++) {
+//					if(!tableau[j].isEmpty()) {
+//						if(tableau[j].get(tableau[j].size() - 1).getRank() == 14){
+//							tableau[i].add(tableau[j].remove(tableau[j].size()- 1));
+//							moves++;
+//						}
+//					}
+//				}
+//			}
+//		}
+//
+//		for(int i = 0; i < 7; i++) {
+//			ArrayList<Card> toMove = checkCardsAbove(i);
+//			boolean moved = false;
+//			int temp = toMove.size() - 1;
+//			if(!toMove.isEmpty()) {
+//				Card cardToCheck = toMove.get(toMove.size()-1);
+//				for(int j = 0; j < 7; j++) {
+//					if (tableau[j].size() > 0) {
+//						Card card = tableau[j].get(tableau[j].size() - 1);
+//						if(cardToCheck.getRank() == card.getRank() + 1 && !cardToCheck.getColor().equals(card.getColor())) {
+//							int column = i;
+//							moved = true;
+//							while(temp > 0) {
+//								Card toAdd = toMove.get(temp);
+//								tableau[j].add(toAdd);
+//								temp--;
+//							}
+//							if(moved) {
+//								removeCards(toMove, column);
+//								moves++;
+//								break;
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	/**
 	 * 
@@ -472,7 +511,7 @@ public class GameBoard {
 	 */
 	public ArrayList<Card> checkCardsAbove(int i) {
 		ArrayList<Card> holdArray = new ArrayList<Card>();
-			for(int j = 0; j < tableau[i].size(); j++) {
+			for(int j = tableau[i].size()-1; j > 0; j--) {
 				Card card = tableau[i].get(tableau[i].size() - 1);
 				int temp = j;
 				while(temp > 0) {
