@@ -176,10 +176,10 @@ public class GameBoard {
 	 */
 	public boolean solve() {
 
-		if (this.foundationHeart.size() == 14 &&
-			this.foundationDiamond.size() == 14 &&
-			this.foundationClub.size() == 14 &&
-			this.foundationSpade.size() == 14) {
+		if (this.foundationHeart.size() == 13 &&
+			this.foundationDiamond.size() == 13 &&
+			this.foundationClub.size() == 13 &&
+			this.foundationSpade.size() == 13) {
 			System.out.println("Moves: " + moves);
 				return true;
 		}
@@ -188,20 +188,22 @@ public class GameBoard {
 			return false;
 		}
 		else {
-			while(tableauToFoundation());
-			tableauToTableau();
-			deckToFoundation();
-			deckToTableau();
-			System.out.println("Moves: " + moves);
 			gameWatch();
-			return solve();
+			tableauToTableau();
+			//while(tableauToFoundation());
+			//deckToTableau();
+			//deckToFoundation();
+			//System.out.println("Moves: " + moves);
+			gameWatch();
+			//return solve();
+			return false;
 		}	
 
 	}
 	
 	/**
 	 * 
-	 * Watches if any tableau are open
+	 * updates console of what is happening during the game
 	 * 
 	 */
 	public void gameWatch() {
@@ -219,7 +221,7 @@ public class GameBoard {
 	/**
 	 * Moves a card from the deck to the tableau
 	 */
-	public void deckToTableau() {
+	public boolean deckToTableau() {
 		ArrayList<Card> discard = deck.getDiscardDeck();
 		if (!discard.isEmpty()) {
 			Card DCard = discard.get(discard.size()-1);
@@ -230,11 +232,12 @@ public class GameBoard {
 						tableau[i].add(DCard);
 						deck.removeFromDiscard(DCard);
 						moves++;
-						return;
+						return true;
 					}
 				}
 			}
 		}
+		return false;
 	}
 	
 	//tableautotableau but only moving one card at a time
@@ -248,7 +251,7 @@ public class GameBoard {
 			if (tableau[i].size() == 0) {
 				for(int j = 0; j < 7; j++) {
 					if(!tableau[j].isEmpty()) {
-						if(tableau[j].get(tableau[j].size() - 1).getRank() == 14){
+						if(tableau[j].get(tableau[j].size() - 1).getRank() == 13){
 							tableau[i].add(tableau[j].remove(tableau[j].size()- 1));
 							moves++;
 						}
@@ -256,27 +259,102 @@ public class GameBoard {
 				}
 			}
 		}
-		
-		ArrayList bottomCards = new ArrayList();
-		
+		ArrayList<Card> t0 = checkCardsAbove(0);
+		ArrayList<Card> t1 = checkCardsAbove(1);
+		ArrayList<Card> t2 = checkCardsAbove(2);
+		ArrayList<Card> t3 = checkCardsAbove(3);
+		ArrayList<Card> t4 = checkCardsAbove(4);
+		ArrayList<Card> t5 = checkCardsAbove(5);
+		ArrayList<Card> t6 = checkCardsAbove(6);
+		ArrayList<Card> bottomCards = new ArrayList<Card>();
+
 		for (int i =0; i < 7; i++) {
-			 bottomCards.add(tableau[i].get(tableau[i].size() - 1));
+			if (!tableau[i].isEmpty()){
+				if (tableau[i].size() >= 1) {
+					bottomCards.add(tableau[i].get(tableau[i].size() - 1));
+				}
+			}
 		}
-		ArrayList duplicate = bottomCards;
-		
+		ArrayList<Card> duplicate = bottomCards;
 		//TODO Maybe a while loop can remedy the problem by allowing the card to move in tableau simultaneously 
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 7; j++) {
-				if (i <= j) {
+		for (int i = 0; i < bottomCards.size(); i++) {
+			for (int j = 0; j < bottomCards.size(); j++) {
+				if (!tableau[j].isEmpty()) {
+				if (i != j) {
 					Card first = (Card) bottomCards.get(i);
-					Card second = (Card) duplicate.get(j);
+					Card second;
+					if (j == 0) {
+						 second = (Card) t0.get(t0.size()-1);
+					} else if (j == 1) {
+						 second = (Card) t1.get(t1.size()-1);
+					} else if (j == 2) {
+						 second = (Card) t2.get(t2.size()-1);
+					} else if (j == 3) {
+						 second = (Card) t3.get(t3.size()-1);
+					} else if (j == 4) {
+						 second = (Card) t4.get(t4.size()-1);
+					} else if (j == 5) {
+						 second = (Card) t5.get(t5.size()-1);
+					} else {
+						 second = (Card) t6.get(t6.size()-1);
+					}
+					
 					if (!(first.getColor().equals(second.getColor())) && first.getRank() == second.getRank()+1) {
-						System.out.println(duplicate.get(i));
-						tableau[i].add(tableau[j].remove(tableau[j].size()-1));
-						moves++;
-						break;
+						if (tableau[i].size() > 0 && tableau[j].size() >0) {
+							//tableau[i].add(tableau[j].remove(tableau[j].size()-1));
+							System.out.println(i);
+							if (i == 0) {
+								for (int q = 0; q <= t0.size()-1; q++) {
+									tableau[i].add(t0.get(q));
+								}	
+							} else if (i == 1) {
+								for (int q = 0; q <= t1.size()-1; q++) {
+									tableau[i].add(t1.get(q));
+								}	
+							} else if (i == 2) {
+								for (int q = 0; q <= t2.size()-1; q++) {
+									tableau[i].add(t2.get(q));
+								}	
+							} else if (i == 3) {
+								for (int q = 0; q <= t3.size()-1; q++) {
+									tableau[i].add(t3.get(q));
+								}	
+							} else if (i == 4) {
+								for (int q = 0; q <= t4.size()-1; q++) {
+									tableau[i].add(t4.get(q));
+								}	
+							} else if (i == 5) {
+								for (int q = 0; q <= t5.size()-1; q++) {
+									tableau[i].add(t5.get(q));
+								}	
+							} else {
+								for (int q = 0; q <= t6.size()-1; q++) {
+									tableau[i].add(t6.get(q));
+								}	
+							}
+							System.out.println(j);
+							if (j == 0) {
+								tableau[j].removeAll(t0);
+							} else if (j == 1) {
+								tableau[j].removeAll(t1);
+							} else if (j == 2) {
+								tableau[j].removeAll(t2);
+							} else if (j == 3) {
+								tableau[j].removeAll(t3);
+							} else if (j == 4) {
+								tableau[j].removeAll(t4);
+							} else if (j == 5) {
+								tableau[j].removeAll(t5);
+							} else {
+								tableau[j].removeAll(t6);
+							}
+							
+							moves++;
+							break;
+						}
 					}
 				} 
+			}
 			}
 		}
 	}
@@ -300,12 +378,16 @@ public class GameBoard {
 //		}
 //
 //		for(int i = 0; i < 7; i++) {
-//			ArrayList<Card> toMove = checkCardsAbove(i);
+//			ArrayList<Card> toMove = new ArrayList<Card>();
+//			if (!tableau[i].isEmpty()) {
+//				 toMove = checkCardsAbove(i);
+//			}
 //			boolean moved = false;
 //			int temp = toMove.size() - 1;
 //			if(!toMove.isEmpty()) {
 //				Card cardToCheck = toMove.get(toMove.size()-1);
 //				for(int j = 0; j < 7; j++) {
+//					if (i != j) {
 //					if (tableau[j].size() > 0) {
 //						Card card = tableau[j].get(tableau[j].size() - 1);
 //						if(cardToCheck.getRank() == card.getRank() + 1 && !cardToCheck.getColor().equals(card.getColor())) {
@@ -322,6 +404,7 @@ public class GameBoard {
 //								break;
 //							}
 //						}
+//					}
 //					}
 //				}
 //			}
@@ -515,8 +598,12 @@ public class GameBoard {
 	 */
 	public ArrayList<Card> checkCardsAbove(int i) {
 		ArrayList<Card> holdArray = new ArrayList<Card>();
+		int count = 1;
+		if (!tableau[i].isEmpty()) {
+		Card c = tableau[i].get(tableau[i].size() - 1);
+		holdArray.add(c);
 			for(int j = tableau[i].size()-1; j > 0; j--) {
-				Card card = tableau[i].get(tableau[i].size() - 1);
+				Card card = tableau[i].get(tableau[i].size() - count);
 				int temp = j;
 				while(temp > 0) {
 					if(card.getHidden() == 1) {
@@ -526,9 +613,11 @@ public class GameBoard {
 						}
 					}
 					temp--;
+					
 				}
-
+				count++;
 			}
+		}
 		return holdArray;
 	}
 	

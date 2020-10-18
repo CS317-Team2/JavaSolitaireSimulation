@@ -20,7 +20,7 @@ public class Card {
 	/**
 	 * 
 	 * Initiation of the card
-	 * 
+	 * 												11		
 	 * @param rank A, 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King
 	 * @param suit Heart, Spade, Diamond, and Club
 	 * @param hidden 0 means not visible to person, 1 means visible
