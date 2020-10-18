@@ -190,13 +190,14 @@ public class GameBoard {
 		else {
 			gameWatch();
 			tableauToTableau();
-			//while(tableauToFoundation());
-			//deckToTableau();
-			//deckToFoundation();
+			while(tableauToFoundation());
+			deckToTableau();
+			deckToFoundation();
 			//System.out.println("Moves: " + moves);
-			gameWatch();
-			//return solve();
-			return false;
+			//gameWatch();
+;
+			return solve();
+			//return false;
 		}	
 
 	}
@@ -210,9 +211,12 @@ public class GameBoard {
 		for (int i = 0; i < 7; i++) {
 			System.out.print("|T" + i +"|");
 			ArrayList a = tableau[i];
-			if ((tableau[i].size() >= 1)) {
-				Card b = (Card) a.get(tableau[i].size()-1);
-				System.out.print(" " + b.getRank() + b.getSuit() + " C"+ tableau[i].size() + " ");
+			if ((tableau[i].size() >= 0)) {
+				for (int j = tableau[i].size()-1; j >= 0; j--) {
+					Card b = (Card) a.get(j);
+					System.out.print(" " + b.getRank() + b.getSuit() + b.getHidden());
+				}
+				 System.out.println(" C"+ tableau[i].size() + " ");
 			}
 		}
 		System.out.println();
@@ -275,8 +279,6 @@ public class GameBoard {
 				}
 			}
 		}
-		ArrayList<Card> duplicate = bottomCards;
-		//TODO Maybe a while loop can remedy the problem by allowing the card to move in tableau simultaneously 
 		for (int i = 0; i < bottomCards.size(); i++) {
 			for (int j = 0; j < bottomCards.size(); j++) {
 				if (!tableau[j].isEmpty()) {
@@ -301,54 +303,32 @@ public class GameBoard {
 					
 					if (!(first.getColor().equals(second.getColor())) && first.getRank() == second.getRank()+1) {
 						if (tableau[i].size() > 0 && tableau[j].size() >0) {
-							//tableau[i].add(tableau[j].remove(tableau[j].size()-1));
-							System.out.println(i);
-							if (i == 0) {
-								for (int q = 0; q <= t0.size()-1; q++) {
-									tableau[i].add(t0.get(q));
-								}	
-							} else if (i == 1) {
-								for (int q = 0; q <= t1.size()-1; q++) {
-									tableau[i].add(t1.get(q));
-								}	
-							} else if (i == 2) {
-								for (int q = 0; q <= t2.size()-1; q++) {
-									tableau[i].add(t2.get(q));
-								}	
-							} else if (i == 3) {
-								for (int q = 0; q <= t3.size()-1; q++) {
-									tableau[i].add(t3.get(q));
-								}	
-							} else if (i == 4) {
-								for (int q = 0; q <= t4.size()-1; q++) {
-									tableau[i].add(t4.get(q));
-								}	
-							} else if (i == 5) {
-								for (int q = 0; q <= t5.size()-1; q++) {
-									tableau[i].add(t5.get(q));
-								}	
-							} else {
-								for (int q = 0; q <= t6.size()-1; q++) {
-									tableau[i].add(t6.get(q));
-								}	
-							}
-							System.out.println(j);
 							if (j == 0) {
+								tableau[i].addAll(t0);
 								tableau[j].removeAll(t0);
 							} else if (j == 1) {
+								tableau[i].addAll(t1);
 								tableau[j].removeAll(t1);
 							} else if (j == 2) {
+								tableau[i].addAll(t2);
 								tableau[j].removeAll(t2);
 							} else if (j == 3) {
+								tableau[i].addAll(t3);
 								tableau[j].removeAll(t3);
 							} else if (j == 4) {
+								tableau[i].addAll(t4);
 								tableau[j].removeAll(t4);
 							} else if (j == 5) {
+								tableau[i].addAll(t5);
 								tableau[j].removeAll(t5);
 							} else {
+								tableau[i].addAll(t6);
 								tableau[j].removeAll(t6);
 							}
-							
+							if (!tableau[j].isEmpty()) {
+								Card b = tableau[j].get((tableau[j].size()-1));
+								b.makeVisible();
+							}
 							moves++;
 							break;
 						}
@@ -359,57 +339,6 @@ public class GameBoard {
 		}
 	}
 	
-	
-
-//	public void tableauToTableau() {
-//		
-//		//Checks for open tableau space, and then looks for/places a king
-//		for (int i = 0; i < 7; i++) {
-//			if (tableau[i].size() == 0) {
-//				for(int j = 0; j < 7; j++) {
-//					if(!tableau[j].isEmpty()) {
-//						if(tableau[j].get(tableau[j].size() - 1).getRank() == 14){
-//							tableau[i].add(tableau[j].remove(tableau[j].size()- 1));
-//							moves++;
-//						}
-//					}
-//				}
-//			}
-//		}
-//
-//		for(int i = 0; i < 7; i++) {
-//			ArrayList<Card> toMove = new ArrayList<Card>();
-//			if (!tableau[i].isEmpty()) {
-//				 toMove = checkCardsAbove(i);
-//			}
-//			boolean moved = false;
-//			int temp = toMove.size() - 1;
-//			if(!toMove.isEmpty()) {
-//				Card cardToCheck = toMove.get(toMove.size()-1);
-//				for(int j = 0; j < 7; j++) {
-//					if (i != j) {
-//					if (tableau[j].size() > 0) {
-//						Card card = tableau[j].get(tableau[j].size() - 1);
-//						if(cardToCheck.getRank() == card.getRank() + 1 && !cardToCheck.getColor().equals(card.getColor())) {
-//							int column = i;
-//							moved = true;
-//							while(temp > 0) {
-//								Card toAdd = toMove.get(temp);
-//								tableau[j].add(toAdd);
-//								temp--;
-//							}
-//							if(moved) {
-//								removeCards(toMove, column);
-//								moves++;
-//								break;
-//							}
-//						}
-//					}
-//					}
-//				}
-//			}
-//		}
-//	}
 
 	/**
 	 * 
@@ -495,33 +424,41 @@ public class GameBoard {
 		for (int i = 0; i < 7; i++) {
 			if (tableau[i].size() != 0) { 
 				Card card = tableau[i].get(tableau[i].size()- 1);
-				Card cardAbove = tableau[i].get(tableau[i].size()- 1);
-				if (tableau[i].size() > 1) {
-					cardAbove = tableau[i].get(tableau[i].size()- 2);
-				}
 				String suit  = card.getSuit();
 				if (canPutFoundation(card)) {
 					if (suit == "Hearts") {
-						cardAbove.makeVisible();
 						this.foundationHeart.add(tableau[i].remove(tableau[i].size()- 1));
+						if (!tableau[i].isEmpty()) {
+							Card b = tableau[i].get((tableau[i].size()-1));
+							b.makeVisible();
+						}
 						moves++;
 						return true;
 					}
 					if (suit == "Diamonds") {
-						cardAbove.makeVisible();
 						this.foundationDiamond.add(tableau[i].remove(tableau[i].size()- 1));
+						if (!tableau[i].isEmpty()) {
+							Card b = tableau[i].get((tableau[i].size()-1));
+							b.makeVisible();
+						}
 						moves++;
 						return true;
 					}
 					if (suit == "Clubs") {
-						cardAbove.makeVisible();
 						this.foundationClub.add(tableau[i].remove(tableau[i].size()- 1));
+						if (!tableau[i].isEmpty()) {
+							Card b = tableau[i].get((tableau[i].size()-1));
+							b.makeVisible();
+						}
 						moves++;
 						return true;
 					}
 					if (suit == "Spades") {
-						cardAbove.makeVisible();
 						this.foundationSpade.add(tableau[i].remove(tableau[i].size()- 1));
+						if (!tableau[i].isEmpty()) {
+							Card b = tableau[i].get((tableau[i].size()-1));
+							b.makeVisible();
+						}
 						moves++;
 						return true;
 					}
