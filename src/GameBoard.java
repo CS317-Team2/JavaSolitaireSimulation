@@ -14,7 +14,7 @@ public class GameBoard {
 	private static ArrayList<Card> foundationSpade;
 	private static ArrayList<Card> foundationHeart;
 	private static ArrayList<Card> foundationClub;
-	private ArrayList<Card>[] tableau, stopT;
+	private ArrayList<Card>[] tableau;
 	private CardDeck deck;
 	private int moves;
 	
@@ -144,8 +144,6 @@ public class GameBoard {
 		tableau[6].get(3).hide();
 		tableau[6].get(4).hide();
 		tableau[6].get(5).hide();
-		
-		stopT = tableau;
 	}
 	
 	/**
@@ -188,14 +186,13 @@ public class GameBoard {
 			return false;
 		}
 		else {
-			gameWatch();
+			//gameWatch();
 			tableauToTableau();
 			while(tableauToFoundation());
 			deckToTableau();
 			deckToFoundation();
 			//System.out.println("Moves: " + moves);
-			//gameWatch();
-;
+			gameWatch();
 			return solve();
 			//return false;
 		}	
@@ -210,7 +207,7 @@ public class GameBoard {
 	public void gameWatch() {
 		for (int i = 0; i < 7; i++) {
 			System.out.print("|T" + i +"|");
-			ArrayList a = tableau[i];
+			ArrayList<Card> a = tableau[i];
 			if ((tableau[i].size() >= 0)) {
 				for (int j = tableau[i].size()-1; j >= 0; j--) {
 					Card b = (Card) a.get(j);
@@ -244,7 +241,6 @@ public class GameBoard {
 		return false;
 	}
 	
-	//tableautotableau but only moving one card at a time
 	/**
 	 * Moves a card from one of the tableaus to one of the other 
 	 * tableaus.
@@ -271,7 +267,13 @@ public class GameBoard {
 		ArrayList<Card> t5 = checkCardsAbove(5);
 		ArrayList<Card> t6 = checkCardsAbove(6);
 		ArrayList<Card> bottomCards = new ArrayList<Card>();
-
+		System.out.println("T0Check: " + t0.size() + " " + 
+				"T1Check: " + t1.size() + " " + 
+				"T2Check: " + t2.size() + " " + 
+				"T3Check: " + t3.size() + " " + 
+				"T4Check: " + t4.size() + " " + 
+				"T5Check: " + t5.size() + " " + 
+				"T6Check: " + t6.size());
 		for (int i =0; i < 7; i++) {
 			if (!tableau[i].isEmpty()){
 				if (tableau[i].size() >= 1) {
@@ -304,25 +306,39 @@ public class GameBoard {
 					if (!(first.getColor().equals(second.getColor())) && first.getRank() == second.getRank()+1) {
 						if (tableau[i].size() > 0 && tableau[j].size() >0) {
 							if (j == 0) {
-								tableau[i].addAll(t0);
+								for (int m = t0.size()-1; m >= 0; m--) {
+									tableau[i].add(t0.get(m));
+								}
 								tableau[j].removeAll(t0);
 							} else if (j == 1) {
-								tableau[i].addAll(t1);
+								for (int m = t1.size()-1; m >= 0; m--) {
+									tableau[i].add(t1.get(m));
+								}
 								tableau[j].removeAll(t1);
 							} else if (j == 2) {
-								tableau[i].addAll(t2);
+								for (int m = t2.size()-1; m >= 0; m--) {
+									tableau[i].add(t2.get(m));
+								}
 								tableau[j].removeAll(t2);
 							} else if (j == 3) {
-								tableau[i].addAll(t3);
+								for (int m = t3.size()-1; m >= 0; m--) {
+									tableau[i].add(t3.get(m));
+								}
 								tableau[j].removeAll(t3);
 							} else if (j == 4) {
-								tableau[i].addAll(t4);
+								for (int m = t4.size()-1; m >= 0; m--) {
+									tableau[i].add(t4.get(m));
+								}
 								tableau[j].removeAll(t4);
 							} else if (j == 5) {
-								tableau[i].addAll(t5);
+								for (int m = t5.size()-1; m >= 0; m--) {
+									tableau[i].add(t5.get(m));
+								}
 								tableau[j].removeAll(t5);
 							} else {
-								tableau[i].addAll(t6);
+								for (int m = t6.size()-1; m >= 0; m--) {
+									tableau[i].add(t6.get(m));
+								}
 								tableau[j].removeAll(t6);
 							}
 							if (!tableau[j].isEmpty()) {
@@ -475,7 +491,7 @@ public class GameBoard {
 	
 	/**
 	 * 
-	 * Ckecing if the card can be placed in the foundation
+	 * Checking if the card can be placed in the foundation
 	 * 
 	 * @param card the card had it's rank and color
 	 * @return true if it can be placed on the foundation
@@ -537,24 +553,25 @@ public class GameBoard {
 		ArrayList<Card> holdArray = new ArrayList<Card>();
 		int count = 1;
 		if (!tableau[i].isEmpty()) {
-		Card c = tableau[i].get(tableau[i].size() - 1);
-		holdArray.add(c);
-			for(int j = tableau[i].size()-1; j > 0; j--) {
-				Card card = tableau[i].get(tableau[i].size() - count);
-				int temp = j;
-				while(temp > 0) {
-					if(card.getHidden() == 1) {
+			Card c = tableau[i].get(tableau[i].size() - 1);
+			holdArray.add(c);
+				for(int j = tableau[i].size()-1; j >= 0; j--) {
+					Card card = tableau[i].get(tableau[i].size() - count);
+					int temp = j;
+					while(temp >= 0) {
 						Card cardAbove = tableau[i].get(temp);
-						if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
-							holdArray.add(cardAbove);
+						if(card.getHidden() == 1 && cardAbove.getHidden() == 1) {
+							
+							if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
+								holdArray.add(cardAbove);
+							}
 						}
+						temp--;
+						
 					}
-					temp--;
-					
+					count++;
 				}
-				count++;
 			}
-		}
 		return holdArray;
 	}
 	
