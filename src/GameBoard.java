@@ -549,47 +549,55 @@ public class GameBoard {
 	 * @param i the number for which card to check
 	 * @return the card that is being checked
 	 */
+//	public ArrayList<Card> checkCardsAbove(int i) {
+//		ArrayList<Card> holdArray = new ArrayList<Card>();
+//		int count = 1;
+//		if (!tableau[i].isEmpty()) {
+//			Card c = tableau[i].get(tableau[i].size() - 1);
+//			holdArray.add(c);
+//				if (tableau[i].size() > 1) {
+//				for(int j = tableau[i].size()-1; j >= 0; j--) {
+//					Card card = tableau[i].get(tableau[i].size() - count);
+//					int temp = j;
+//					while(temp >= 0) {
+//						Card cardAbove = tableau[i].get(temp);
+//						if(card.getHidden() == 1 && cardAbove.getHidden() == 1) {
+//							
+//							if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
+//								holdArray.add(cardAbove);
+//							}
+//						}
+//						temp--;
+//						
+//					}
+//					count++;
+//				}
+//				}
+//			}
+//		return holdArray;
+//	}
+	
+	
 	public ArrayList<Card> checkCardsAbove(int i) {
 		ArrayList<Card> holdArray = new ArrayList<Card>();
-		int count = 1;
 		if (!tableau[i].isEmpty()) {
-			Card c = tableau[i].get(tableau[i].size() - 1);
-			holdArray.add(c);
-				for(int j = tableau[i].size()-1; j >= 0; j--) {
-					Card card = tableau[i].get(tableau[i].size() - count);
-					int temp = j;
-					while(temp >= 0) {
-						Card cardAbove = tableau[i].get(temp);
-						if(card.getHidden() == 1 && cardAbove.getHidden() == 1) {
-							
-							if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
-								holdArray.add(cardAbove);
-							}
-						}
-						temp--;
+			Card card = tableau[i].get(tableau[i].size() - 1);
+			holdArray.add(card);
+			if (tableau[i].size() > 1) {
+				for(int j = tableau[i].size()-1; j > 0; j--) {
+					card = tableau[i].get(j);
+					Card cardAbove = tableau[i].get(j-1);
+					if(card.getHidden() == 1 && cardAbove.getHidden() == 1) {
 						
+						if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
+							holdArray.add(cardAbove);
+						}
 					}
-					count++;
 				}
 			}
+		}
+
+		
 		return holdArray;
 	}
-	
-	/**
-	 * 
-	 * Remove the cards
-	 * 
-	 * @param moved the ones that have been moved
-	 * @param column the ones that are in the tableau
-	 */
-	public void removeCards(ArrayList<Card> moved, int column) {
-		for(int i = 0; i > moved.size() - 1; i++) {
-			tableau[column].remove(tableau[column].get(tableau[column].indexOf(moved.get(i))));
-			moves++;
-		}
-		if(!tableau[column].isEmpty()) {
-			tableau[column].get(tableau[column].size() - 1).makeVisible();
-		}
-	}
-	
 }
