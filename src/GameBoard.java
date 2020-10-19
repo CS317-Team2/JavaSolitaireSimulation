@@ -236,6 +236,12 @@ public class GameBoard {
 						return true;
 					}
 				}
+				if (tableau[i].size() == 0 && DCard.getRank() == 13) {
+					tableau[i].add(DCard);
+					deck.removeFromDiscard(DCard);
+					moves++;
+					return true;
+				}
 			}
 		}
 		return false;
@@ -509,7 +515,6 @@ public class GameBoard {
 	 * @return true if the rank matches to the foundation requirements
 	 */
 	public boolean tableauToFoundation() {
-		
 		for (int i = 0; i < 7; i++) {
 			if (tableau[i].size() != 0) { 
 				Card card = tableau[i].get(tableau[i].size()- 1);
