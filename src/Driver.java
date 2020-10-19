@@ -51,8 +51,6 @@ public class Driver {
 			
 			// Array list created for the Club Foundation
 			ArrayList a = board.getFoundationClub();
-			
-			// Loop to print all of the club cards
 			for (int j = 0; j < a.size(); j ++) {
 				Card c = (Card) a.get(j);
 				System.out.print(c.getRank() + ", ");
@@ -61,8 +59,6 @@ public class Driver {
 			
 			// Array list created for the Diamond Foundation
 			ArrayList b = board.getFoundationDiamond();
-			
-			// Loop to print all of the diamond cards
 			for (int j = 0; j < b.size(); j ++) {
 				Card c = (Card) b.get(j);
 				System.out.print(c.getRank()+ ", ");
@@ -71,8 +67,6 @@ public class Driver {
 			
 			// Array list created for the Heart Foundation
 			ArrayList d = board.getFoundationHeart();
-			
-			// Loop to print all of the heart cards
 			for (int j = 0; j < d.size(); j ++) {
 				Card c = (Card) d.get(j);
 				System.out.print(c.getRank()+ ", ");
@@ -81,8 +75,6 @@ public class Driver {
 			
 			// Array list created for the Spade Foundation
 			ArrayList e = board.getFoundationSpade();
-			
-			// Loop to print all of the spade cards
 			for (int j = 0; j < e.size(); j ++) {
 				Card c = (Card) e.get(j);
 				System.out.print(c.getRank()+ ", ");

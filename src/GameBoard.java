@@ -192,7 +192,7 @@ public class GameBoard {
 			deckToTableau();
 			deckToFoundation();
 			//System.out.println("Moves: " + moves);
-			gameWatch();
+			//gameWatch();
 			return solve();
 			//return false;
 		}	
@@ -267,13 +267,13 @@ public class GameBoard {
 		ArrayList<Card> t5 = checkCardsAbove(5);
 		ArrayList<Card> t6 = checkCardsAbove(6);
 		ArrayList<Card> bottomCards = new ArrayList<Card>();
-		System.out.println("T0Check: " + t0.size() + " " + 
-				"T1Check: " + t1.size() + " " + 
-				"T2Check: " + t2.size() + " " + 
-				"T3Check: " + t3.size() + " " + 
-				"T4Check: " + t4.size() + " " + 
-				"T5Check: " + t5.size() + " " + 
-				"T6Check: " + t6.size());
+//		System.out.println("T0Check: " + t0.size() + " " + 
+//				"T1Check: " + t1.size() + " " + 
+//				"T2Check: " + t2.size() + " " + 
+//				"T3Check: " + t3.size() + " " + 
+//				"T4Check: " + t4.size() + " " + 
+//				"T5Check: " + t5.size() + " " + 
+//				"T6Check: " + t6.size());
 		for (int i =0; i < 7; i++) {
 			if (!tableau[i].isEmpty()){
 				if (tableau[i].size() >= 1) {
@@ -288,19 +288,91 @@ public class GameBoard {
 					Card first = (Card) bottomCards.get(i);
 					Card second;
 					if (j == 0) {
+						if (t0.size() <=0) {
+							second = new Card(100, "Hearts", 1);
+						} else {
 						 second = (Card) t0.get(t0.size()-1);
+						}
 					} else if (j == 1) {
+						if (t1.size() <=0) {
+							second = new Card(100, "Hearts", 1);
+						} else {
 						 second = (Card) t1.get(t1.size()-1);
+						}
 					} else if (j == 2) {
+						if (t2.size() <=0) {
+							second = new Card(100, "Hearts", 1);
+						} else {
 						 second = (Card) t2.get(t2.size()-1);
+						}
 					} else if (j == 3) {
+						if (t3.size() <=0) {
+							second = new Card(100, "Hearts", 1);
+						} else {
 						 second = (Card) t3.get(t3.size()-1);
+						}
 					} else if (j == 4) {
+						if (t4.size() <=0) {
+							second = new Card(100, "Hearts", 1);
+						} else {
 						 second = (Card) t4.get(t4.size()-1);
+						}
 					} else if (j == 5) {
+						if (t5.size() <=0) {
+							second = new Card(100, "Hearts", 1);
+						} else {
 						 second = (Card) t5.get(t5.size()-1);
+						}
 					} else {
+						if (t6.size() <=0) {
+							second = new Card(100, "Hearts", 1);
+						} else {
 						 second = (Card) t6.get(t6.size()-1);
+						}
+					}
+
+					if(second.getRank() == 13 && tableau[i].size() == 0){
+						if (j == 0) {
+							for (int m = t0.size()-1; m >= 0; m--) {
+								tableau[i].add(t0.get(m));
+							}
+							tableau[j].removeAll(t0);
+						} else if (j == 1) {
+							for (int m = t1.size()-1; m >= 0; m--) {
+								tableau[i].add(t1.get(m));
+							}
+							tableau[j].removeAll(t1);
+						} else if (j == 2) {
+							for (int m = t2.size()-1; m >= 0; m--) {
+								tableau[i].add(t2.get(m));
+							}
+							tableau[j].removeAll(t2);
+						} else if (j == 3) {
+							for (int m = t3.size()-1; m >= 0; m--) {
+								tableau[i].add(t3.get(m));
+							}
+							tableau[j].removeAll(t3);
+						} else if (j == 4) {
+							for (int m = t4.size()-1; m >= 0; m--) {
+								tableau[i].add(t4.get(m));
+							}
+							tableau[j].removeAll(t4);
+						} else if (j == 5) {
+							for (int m = t5.size()-1; m >= 0; m--) {
+								tableau[i].add(t5.get(m));
+							}
+							tableau[j].removeAll(t5);
+						} else {
+							for (int m = t6.size()-1; m >= 0; m--) {
+								tableau[i].add(t6.get(m));
+							}
+							tableau[j].removeAll(t6);
+						}
+						if (!tableau[j].isEmpty()) {
+							Card b = tableau[j].get((tableau[j].size()-1));
+							b.makeVisible();
+						}
+						moves++;
 					}
 					
 					if (!(first.getColor().equals(second.getColor())) && first.getRank() == second.getRank()+1) {
@@ -349,6 +421,7 @@ public class GameBoard {
 							break;
 						}
 					}
+					
 				} 
 			}
 			}
@@ -482,7 +555,7 @@ public class GameBoard {
 				}
 			}
 			else {
-				tableauToTableau();
+				//tableauToTableau();
 			}
 		}
 		return false;
@@ -548,36 +621,7 @@ public class GameBoard {
 	 * 
 	 * @param i the number for which card to check
 	 * @return the card that is being checked
-	 */
-//	public ArrayList<Card> checkCardsAbove(int i) {
-//		ArrayList<Card> holdArray = new ArrayList<Card>();
-//		int count = 1;
-//		if (!tableau[i].isEmpty()) {
-//			Card c = tableau[i].get(tableau[i].size() - 1);
-//			holdArray.add(c);
-//				if (tableau[i].size() > 1) {
-//				for(int j = tableau[i].size()-1; j >= 0; j--) {
-//					Card card = tableau[i].get(tableau[i].size() - count);
-//					int temp = j;
-//					while(temp >= 0) {
-//						Card cardAbove = tableau[i].get(temp);
-//						if(card.getHidden() == 1 && cardAbove.getHidden() == 1) {
-//							
-//							if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
-//								holdArray.add(cardAbove);
-//							}
-//						}
-//						temp--;
-//						
-//					}
-//					count++;
-//				}
-//				}
-//			}
-//		return holdArray;
-//	}
-	
-	
+	 */	
 	public ArrayList<Card> checkCardsAbove(int i) {
 		ArrayList<Card> holdArray = new ArrayList<Card>();
 		if (!tableau[i].isEmpty()) {
@@ -588,7 +632,6 @@ public class GameBoard {
 					card = tableau[i].get(j);
 					Card cardAbove = tableau[i].get(j-1);
 					if(card.getHidden() == 1 && cardAbove.getHidden() == 1) {
-						
 						if(!card.getColor().equals(cardAbove.getColor()) && cardAbove.getRank() == card.getRank() + 1) {
 							holdArray.add(cardAbove);
 						}
