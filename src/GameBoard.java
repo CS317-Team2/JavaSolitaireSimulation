@@ -20,7 +20,7 @@ public class GameBoard {
 	
 	/**
 	 * 
-	 * Initalizing the game board setup
+	 * Initialize the game board setup
 	 * 
 	 */
 	public GameBoard() {

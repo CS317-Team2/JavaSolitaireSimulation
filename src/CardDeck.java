@@ -65,27 +65,34 @@ public class CardDeck {
 //		this.playingDeck.add(new Card(4, "Spades", 1));
 //		this.playingDeck.add(new Card(3, "Spades", 1));
 //		this.playingDeck.add(new Card(2, "Spades", 1));
-//		this.playingDeck.add(new Card(14, "Spades", 1));
 //		this.playingDeck.add(new Card(13, "Spades", 1));
 //		this.playingDeck.add(new Card(12, "Spades", 1));
 //		this.playingDeck.add(new Card(11, "Spades", 1));
 //		this.playingDeck.add(new Card(10, "Spades", 1));
 //		this.playingDeck.add(new Card(9, "Spades", 1));
 //		this.playingDeck.add(new Card(8, "Spades", 1));
-//		for (int j = 1; j <= 14; j++) {
+//		for (int j = 1; j < 14; j++) {
 //			Card card = new Card(j,"Hearts", 1);
 //			this.playingDeck.add(card);
 //		}
-//		for (int j = 1; j <= 14; j++) {
+//		for (int j = 1; j < 14; j++) {
 //			Card card = new Card(j,"Diamonds", 1);
 //			this.playingDeck.add(card);
 //		}
 //	}
 	
 	//deck that looses every time
-	//public CardDeck() {
-	//	this.circulation = 0;
-	//}
+//	public CardDeck() {
+//		this.circulation = 0;
+//		this.playingDeck = new ArrayList<Card>();
+//		this.discardDeck = new ArrayList<Card>();
+//		for (int i = 0; i < SUITS.length; i++) {
+//			for (int j = 1; j <= 12; j++) {
+//				Card card = new Card(j, SUITS[i], 1);
+//				this.playingDeck.add(card);
+//			}
+//		}
+//	}
 	
 	/**
 	 * 
