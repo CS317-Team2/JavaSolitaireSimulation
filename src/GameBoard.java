@@ -188,11 +188,23 @@ public class GameBoard {
 		else {
 			//gameWatch();
 			tableauToTableau();
-			while(tableauToFoundation());
-			deckToTableau();
-			deckToFoundation();
-			//System.out.println("Moves: " + moves);
 			//gameWatch();
+			while(tableauToFoundation());
+			//gameWatch();
+			deckToTableau();
+			//gameWatch();
+			deckToFoundation();
+			//gameWatch();
+			
+//			tableauToTableau();
+//			gameWatch();
+//			while(tableauToFoundation());
+//			gameWatch();
+//			deckToTableau();
+//			gameWatch();
+//			deckToFoundation();
+//			gameWatch();
+//			
 			return solve();
 			//return false;
 		}	
@@ -252,19 +264,7 @@ public class GameBoard {
 	 * tableaus.
 	 */
 	public void tableauToTableau() {
-		//Checks for open tableau space, and then looks for/places a king
-		for (int i = 0; i < 7; i++) {
-			if (tableau[i].size() == 0) {
-				for(int j = 0; j < 7; j++) {
-					if(!tableau[j].isEmpty()) {
-						if(tableau[j].get(tableau[j].size() - 1).getRank() == 13){
-							tableau[i].add(tableau[j].remove(tableau[j].size()- 1));
-							moves++;
-						}
-					}
-				}
-			}
-		}
+		
 		ArrayList<Card> t0 = checkCardsAbove(0);
 		ArrayList<Card> t1 = checkCardsAbove(1);
 		ArrayList<Card> t2 = checkCardsAbove(2);
@@ -273,13 +273,6 @@ public class GameBoard {
 		ArrayList<Card> t5 = checkCardsAbove(5);
 		ArrayList<Card> t6 = checkCardsAbove(6);
 		ArrayList<Card> bottomCards = new ArrayList<Card>();
-//		System.out.println("T0Check: " + t0.size() + " " + 
-//				"T1Check: " + t1.size() + " " + 
-//				"T2Check: " + t2.size() + " " + 
-//				"T3Check: " + t3.size() + " " + 
-//				"T4Check: " + t4.size() + " " + 
-//				"T5Check: " + t5.size() + " " + 
-//				"T6Check: " + t6.size());
 		for (int i =0; i < 7; i++) {
 			if (!tableau[i].isEmpty()){
 				if (tableau[i].size() >= 1) {
@@ -288,7 +281,6 @@ public class GameBoard {
 			}
 		}
 		
-		//TODO Create a method or sort in this particular case to remedy the recursion. 
 		for (int i = 0; i < bottomCards.size(); i++) {
 			for (int j = 0; j < bottomCards.size(); j++) {
 				if (!tableau[j].isEmpty()) {
@@ -338,52 +330,52 @@ public class GameBoard {
 						 second = (Card) t6.get(t6.size()-1);
 						}
 					}
-
+					//King movement
 					if(second.getRank() == 13 && tableau[i].size() == 0){
 						if (j == 0) {
 							for (int m = t0.size()-1; m >= 0; m--) {
 								tableau[i].add(t0.get(m));
+								tableau[j].remove(t0.get(m));
 							}
-							tableau[j].removeAll(t0);
 						} else if (j == 1) {
 							for (int m = t1.size()-1; m >= 0; m--) {
 								tableau[i].add(t1.get(m));
+								tableau[j].remove(t1.get(m));
 							}
-							tableau[j].removeAll(t1);
 						} else if (j == 2) {
 							for (int m = t2.size()-1; m >= 0; m--) {
 								tableau[i].add(t2.get(m));
+								tableau[j].remove(t2.get(m));
 							}
-							tableau[j].removeAll(t2);
 						} else if (j == 3) {
 							for (int m = t3.size()-1; m >= 0; m--) {
 								tableau[i].add(t3.get(m));
+								tableau[j].remove(t3.get(m));
 							}
-							tableau[j].removeAll(t3);
 						} else if (j == 4) {
 							for (int m = t4.size()-1; m >= 0; m--) {
 								tableau[i].add(t4.get(m));
+								tableau[j].remove(t4.get(m));
 							}
-							tableau[j].removeAll(t4);
 						} else if (j == 5) {
 							for (int m = t5.size()-1; m >= 0; m--) {
 								tableau[i].add(t5.get(m));
+								tableau[j].remove(t5.get(m));
 							}
-							tableau[j].removeAll(t5);
 						} else {
 							for (int m = t6.size()-1; m >= 0; m--) {
 								tableau[i].add(t6.get(m));
+								tableau[j].remove(t6.get(m));
 							}
-							tableau[j].removeAll(t6);
 						}
 						if (!tableau[j].isEmpty()) {
 							Card b = tableau[j].get((tableau[j].size()-1));
 							b.makeVisible();
 						}
-						moves++;
+						return;
 					}
-					
-					if (!(first.getColor().equals(second.getColor())) && first.getRank() == second.getRank()+1) {
+					if (!(first.getColor().equals(second.getColor())) && first.getRank() == second.getRank()+1
+							&& hasHidden(i)) {
 						if (tableau[i].size() > 0 && tableau[j].size() >0) {
 							if (j == 0) {
 								for (int m = t0.size()-1; m >= 0; m--) {
@@ -425,8 +417,7 @@ public class GameBoard {
 								Card b = tableau[j].get((tableau[j].size()-1));
 								b.makeVisible();
 							}
-							moves++;
-							break;
+							return;
 						}
 					}
 					
@@ -453,22 +444,18 @@ public class GameBoard {
 			if (canPutFoundation(discard)) {
 				if (suitD == "Hearts") {
 					this.foundationHeart.add(discard);
-					moves++;
 					return deckToFoundation();
 				}
 				if (suitD == "Diamonds") {
 					this.foundationDiamond.add(discard);
-					moves++;
 					return deckToFoundation();
 				}
 				if (suitD == "Clubs") {
 					this.foundationClub.add(discard);
-					moves++;
 					return deckToFoundation();
 				}
 				if (suitD == "Spades") {
 					this.foundationSpade.add(discard);
-					moves++;
 					return deckToFoundation();
 				}
 			}
@@ -483,22 +470,18 @@ public class GameBoard {
 		if (canPutFoundation(card)) {
 			if (suit == "Hearts") {
 				this.foundationHeart.add(card);
-				moves++;
 				return true;
 			}
 			if (suit == "Diamonds") {
 				this.foundationDiamond.add(card);
-				moves++;
 				return true;
 			}
 			if (suit == "Clubs") {
 				this.foundationClub.add(card);
-				moves++;
 				return true;
 			}
 			if (suit == "Spades") {
 				this.foundationSpade.add(card);
-				moves++;
 				return true;
 			}
 			
@@ -528,7 +511,6 @@ public class GameBoard {
 							Card b = tableau[i].get((tableau[i].size()-1));
 							b.makeVisible();
 						}
-						moves++;
 						return true;
 					}
 					if (suit == "Diamonds") {
@@ -537,7 +519,6 @@ public class GameBoard {
 							Card b = tableau[i].get((tableau[i].size()-1));
 							b.makeVisible();
 						}
-						moves++;
 						return true;
 					}
 					if (suit == "Clubs") {
@@ -546,7 +527,6 @@ public class GameBoard {
 							Card b = tableau[i].get((tableau[i].size()-1));
 							b.makeVisible();
 						}
-						moves++;
 						return true;
 					}
 					if (suit == "Spades") {
@@ -555,19 +535,30 @@ public class GameBoard {
 							Card b = tableau[i].get((tableau[i].size()-1));
 							b.makeVisible();
 						}
-						moves++;
 						return true;
 					}
 					
 				}
 			}
-			else {
-				//tableauToTableau();
-			}
 		}
 		return false;
 	}
 		
+	public boolean hasHidden(int i) {
+		if (!tableau[i].isEmpty()) {
+		if (tableau[i].get(0).getHidden() == 1) {
+			return true;
+		}
+		for (int j = 0; j < tableau[i].size()-1; j++) {
+			if (tableau[i].get(j).getHidden() == 0) {
+				return true;
+			}
+		}
+		
+	}
+		return false;
+	}
+	
 	
 	/**
 	 * 
@@ -650,4 +641,7 @@ public class GameBoard {
 		
 		return holdArray;
 	}
+	
+	
+
 }
