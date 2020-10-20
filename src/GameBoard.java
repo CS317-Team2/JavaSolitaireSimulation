@@ -287,6 +287,8 @@ public class GameBoard {
 				}
 			}
 		}
+		
+		//TODO Create a method or sort in this particular case to remedy the recursion. 
 		for (int i = 0; i < bottomCards.size(); i++) {
 			for (int j = 0; j < bottomCards.size(); j++) {
 				if (!tableau[j].isEmpty()) {
