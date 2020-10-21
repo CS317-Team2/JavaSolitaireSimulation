@@ -43,6 +43,9 @@ public class GameBoard {
 		foundationHeart = new ArrayList<Card>();
 		foundationClub = new ArrayList<Card>();
 	}
+	public int getMoves() {
+		return moves;
+	}
 	
 	/**
 	 * 
@@ -186,30 +189,53 @@ public class GameBoard {
 			return false;
 		}
 		else {
-			//gameWatch();
 			tableauToTableau();
-			//gameWatch();
 			while(tableauToFoundation());
-			//gameWatch();
 			deckToTableau();
-			//gameWatch();
 			deckToFoundation();
+			
+			
+
+			//smart();
+			
 			//gameWatch();
 			
-//			tableauToTableau();
-//			gameWatch();
-//			while(tableauToFoundation());
-//			gameWatch();
-//			deckToTableau();
-//			gameWatch();
-//			deckToFoundation();
-//			gameWatch();
-//			
 			return solve();
 			//return false;
 		}	
 
 	}
+	
+	public void smart() {
+		for (int i = 0; i < 7; i++) {
+			if (!tableau[i].isEmpty()) {
+				if (canPutFoundation(tableau[i].get(tableau[i].size()-1))) {
+					while(tableauToFoundation());
+					deckToFoundation();
+				}
+				if (checkCardsAbove(i).size() > 0) {
+					Card a = checkCardsAbove(i).get(0);
+					for (int j = 0; j < 7; j++) {
+						if (!tableau[j].isEmpty()) {
+							Card b = tableau[j].get(tableau[j].size()-1);
+							if (j != i) {
+								if (b.getRank() == a.getRank()+1 && !(b.getColor().equals(a.getColor()))) {
+									tableauToTableau();
+									while(tableauToFoundation());
+								}
+							}
+						}
+					}
+				}
+				deckToTableau();
+				deckToFoundation();
+			
+			}
+		}
+		
+		
+	}
+	
 	
 	/**
 	 * 
