@@ -290,7 +290,9 @@ public class GameBoard {
 	 * tableaus.
 	 */
 	public void tableauToTableau() {
-		
+		for (int i = 0; i < 7; i++) {
+			
+		}
 		ArrayList<Card> t0 = checkCardsAbove(0);
 		ArrayList<Card> t1 = checkCardsAbove(1);
 		ArrayList<Card> t2 = checkCardsAbove(2);
@@ -451,6 +453,13 @@ public class GameBoard {
 			}
 			}
 		}
+		t0.clear();
+		t1.clear();
+		t2.clear();
+		t3.clear();
+		t4.clear();
+		t5.clear();
+		t6.clear();
 	}
 	
 
